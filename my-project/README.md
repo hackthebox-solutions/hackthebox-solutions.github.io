@@ -1,10 +1,25 @@
+<p align="center">
+  <a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io"><img src="./docs/assets/cover.png" height="200" title="Hackthebox" alt="Hackthebox"></a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/completion-25%25-blue.svg" />
+  <a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/contributors" alt="Contributors"></a>
+  <img src="https://img.shields.io/badge/made%20with-Markdown-1f425f.svg" />
+  <img src="https://img.shields.io/badge/made%20with-KaTeX-1f425f.svg" />
+  <img src="https://img.shields.io/badge/PRs-welcome-1abc9c.svg" />
+  <a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/blob/master/LICENSE" alt="License">
+    <img src="https://img.shields.io/github/license/walkccc/CLRS.svg" />
+  </a>
+</p>
+
+# Solutions to the Hackthebox CTFs
 
 ## Getting Started
 
-This **[website](http://hackthebox-solutions.github.ioo/)** is a compilation of writeups for the website- [**https://www.hackthebox.eu/**](https://www.hackthebox.eu/).
+This **[website](http://hackthebox-solutions.github.io/)** is a compilation of writeups for the website- [**https://www.hackthebox.eu/**](https://www.hackthebox.eu/).
 
 I hope to organize solutions to help people and myself study CTF's. By using [Markdown (.md)](https://en.wikipedia.org/wiki/Markdown) files, this page is much more readable on portable devices.
-
 
 ## Contributors
 
@@ -43,11 +58,11 @@ If I miss your name here, please tell me!
 
 I built this website since I wanted a single place for CTF writeups and something easy to read on mobile devices. The template has been derived from [here](https://walkccc.github.io/CLRS/).
 
-Therefore, if any adjustment is needed or you have the same motivation to contribute to this work, please don't hesitate to give me your feedback. You can press the "pencil icon" in the upper right corner to edit the content or [open an issue](http://hackthebox-solutions.github.ioo/issues/new) in [my repository](http://hackthebox-solutions.github.ioo/). Your solution will be rebased to this repository after I review it and make some form modifications to your pull request.
+Therefore, if any adjustment is needed or you have the same motivation to contribute to this work, please don't hesitate to give me your feedback. You can press the "pencil icon" in the upper right corner to edit the content or [open an issue](http://hackthebox-solutions.github.io/issues/new) in [my repository](http://hackthebox-solutions.github.io/). Your solution will be rebased to this repository after I review it and make some form modifications to your pull request.
 
-I hope this place is uful for everyone
+I hope this place is useful for everyone
 
-    ## How I Generate the Website?
+## How I Generate the Website?
 
 I use the static site generator [MkDocs](http://www.mkdocs.org/) and the beautiful theme [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) to build this website.
 
