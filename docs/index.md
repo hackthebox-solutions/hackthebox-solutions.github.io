@@ -1,6 +1,4 @@
 
-
-
 ## Getting Started
 
 This **[website](http://hackthebox-solutions.github.io/)** is a compilation of writeups for the website- [**https://www.hackthebox.eu/**](https://www.hackthebox.eu/).
@@ -49,7 +47,7 @@ Therefore, if any adjustment is needed or you have the same motivation to contri
 
 I hope this place is uful for everyone
 
-## How I Generate the Website?
+    ## How I Generate the Website?
 
 I use the static site generator [MkDocs](http://www.mkdocs.org/) and the beautiful theme [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) to build this website.
 
