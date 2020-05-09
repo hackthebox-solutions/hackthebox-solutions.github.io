@@ -1,12 +1,4 @@
-# Hack The Box — Cronos Writeup w/o Metasploit
-
-
-
-This is the 10th blog out of a series of blogs I will be publishing on retired HTB machines in preparation for the OSCP. The full list of OSCP like machines compiled by TJnull can be found [here](https://docs.google.com/spreadsheets/u/1/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/htmlview#).
-
-Let’s get started!
-
-## Reconnaissance
+## sReconnaissance
 
 First thing first, we run a quick initial nmap scan to see which ports are open and which services are running on those ports.
 
@@ -28,7 +20,7 @@ We get back the following result showing that 3 ports are open:
 
 * **Port 53**: running ISC BIND 9.10.3-P4 (DNS)
 
-![](https://cdn-images-1.medium.com/max/2000/1*St1x_UiegX7sCSa0P0PVKg.png)
+![](../img/Cronos Writeup/1_St1x_UiegX7sCSa0P0PVKg.png)
 
 Before we start investigating these ports, let’s run more comprehensive nmap scans in the background to make sure we cover all bases.
 
@@ -38,7 +30,7 @@ Let’s run an nmap scan that covers all ports.
 
 We get back the following result. No other ports are open.
 
-![](https://cdn-images-1.medium.com/max/2000/1*9q693sxqpm-KGAHc-LTNfA.png)
+![](../img/Cronos Writeup/1_9q693sxqpm-KGAHc-LTNfA.png)
 
 Similarly, we run an nmap scan with the **-sU **flag enabled to run a UDP scan.
 
@@ -46,7 +38,7 @@ Similarly, we run an nmap scan with the **-sU **flag enabled to run a UDP scan.
 
 I managed to root the box and write this blog, while this UDP scan still did not terminate. So instead I ran another UDP scan only for the top 1000 ports.
 
-![](https://cdn-images-1.medium.com/max/2000/1*ugD51AwilUU6qHwQcttoRQ.png)
+![](../img/Cronos Writeup/1_ugD51AwilUU6qHwQcttoRQ.png)
 
 ## Enumeration
 
@@ -62,7 +54,7 @@ We don’t get anything useful. Next, we enumerate directories on the web server
 
     gobuster dir -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u 10.10.10.13
 
-![](https://cdn-images-1.medium.com/max/2000/1*hpYL0msU3pSNn4kbLqUW3A.png)
+![](../img/Cronos Writeup/1_hpYL0msU3pSNn4kbLqUW3A.png)
 
 Another dead end. At this point, I googled “Apache2 Ubuntu Default Page” and the first entry I got was [this](https://askubuntu.com/questions/603451/why-am-i-getting-the-apache2-ubuntu-default-page-instead-of-my-own-index-html-pa). It seems that this might be a configuration issue where the IP address doesn’t know what hostname it should map to in order to serve a specific site and so instead it’s serving the Apache2 ubuntu default page.
 
@@ -74,7 +66,7 @@ After looking at the [documentation](https://httpd.apache.org/docs/2.4/vhosts/ex
 
 For the first task, we’ll use nslookup to try and figure out the domain name. After running the command, set the server to be 10.10.10.13 and then lookup the given IP address.
 
-![](https://cdn-images-1.medium.com/max/2000/1*ibc-dUf0iwRDcJ5r5uwIzg.png)
+![](../img/Cronos Writeup/1_ibc-dUf0iwRDcJ5r5uwIzg.png)
 
 We can see that this resolves to ns1.cronos.htb. This gives us a domain name of cronos.htb.
 
@@ -84,7 +76,7 @@ Second, as mentioned above we need to add the entry to our /etc/hosts file.
 
 This way when you browse to cronos.htb page it resolves to 10.10.10.13 and knows which page to serve based on the virtual hosts configuration.
 
-![](https://cdn-images-1.medium.com/max/2242/1*99lU0-9r4S0tU58LzHADqA.png)
+![](../img/Cronos Writeup/1_99lU0-9r4S0tU58LzHADqA.png)
 
 Now that we have a working domain name, let’s attempt a zone transfer to get a list of all hosts for this domain. The host command syntax for performing a zone transfer is.
 
@@ -96,7 +88,7 @@ Therefore, to perform a zone transfer we use the following command.
 
 We get back the following result.
 
-![](https://cdn-images-1.medium.com/max/2000/1*4VZzsFbgSOteZzFNoe86Zw.png)
+![](../img/Cronos Writeup/1_4VZzsFbgSOteZzFNoe86Zw.png)
 
 Add the entries in your hosts file.
 
@@ -104,7 +96,7 @@ Add the entries in your hosts file.
 
 Let’s visit the admin page.
 
-![](https://cdn-images-1.medium.com/max/2000/1*xWbSZIFXwCVnaYkmV90RaA.png)
+![](../img/Cronos Writeup/1_xWbSZIFXwCVnaYkmV90RaA.png)
 
 We’re presented with a login page. We’ll try and use that to gain an initial foothold on this box.
 
@@ -116,19 +108,19 @@ I’m going to use john’s password file.
 
     locate password | grep john
 
-![](https://cdn-images-1.medium.com/max/2000/1*EcMuCm1x3DBxvSOVAJORRA.png)
+![](../img/Cronos Writeup/1_EcMuCm1x3DBxvSOVAJORRA.png)
 
 Let’s see how many passwords the file contains.
 
     wc -l /usr/share/john/password.lst
 
-![](https://cdn-images-1.medium.com/max/2000/1*4pL2fmK4aDKaUfLdUOhh3g.png)
+![](../img/Cronos Writeup/1_4pL2fmK4aDKaUfLdUOhh3g.png)
 
 3559 passwords is good enough. Let’s pass the file to hydra and run a brute force attack.
 
 To do that, first intercept the request with Burp to see the form field names and the location that the request is being sent to.
 
-![](https://cdn-images-1.medium.com/max/2000/1*apsjy2qJBWjtQ5b38a3Bpw.png)
+![](../img/Cronos Writeup/1_apsjy2qJBWjtQ5b38a3Bpw.png)
 
 Now we have all the information we need to run hydra.
 
@@ -152,7 +144,7 @@ While this is running, let’s try to see if the form is vulnerable to SQL injec
 
 This bypasses authentication and presents us with the welcome page.
 
-![](https://cdn-images-1.medium.com/max/2000/1*gzjFmx6KWS_fbUYaKHDJAw.png)
+![](../img/Cronos Writeup/1_gzjFmx6KWS_fbUYaKHDJAw.png)
 
 Generally, you would use sqlmap to check if the application is vulnerable to SQL injection, however, since I’m working towards my OSCP and sqlmap is not allowed, I had to resort to manual means.
 
@@ -162,7 +154,7 @@ Regardless, if you want to perform the attack using sqlmap, first intercept the 
 
 I used the verbosity level 4 so that I can see the payload sqlmap uses for each request.
 
-![](https://cdn-images-1.medium.com/max/2080/1*jxxay73Vo5QZO204n3HLZw.png)
+![](../img/Cronos Writeup/1_jxxay73Vo5QZO204n3HLZw.png)
 
 For the above payload we get a redirect to the welcome page. To test it out, go back to the browser and enter the payload in the username field. Then hit submit.
 
@@ -170,7 +162,7 @@ For the above payload we get a redirect to the welcome page. To test it out, go 
 
 We’re presented with the login page!
 
-![](https://cdn-images-1.medium.com/max/2000/1*0lUw-G6uCqlf7Mjzd0FZmA.png)
+![](../img/Cronos Writeup/1_0lUw-G6uCqlf7Mjzd0FZmA.png)
 
 Now that we saw both the manual & automated way of exploiting SQL injections, let’s proceed with solving the box.
 
@@ -182,7 +174,7 @@ What the above command does is run the the preceding command (ping 8.8.8.8) in t
 
 We get back the following result. It’s definitely vulnerable! The web server is running with the privileges of the web daemon user www-data.
 
-![](https://cdn-images-1.medium.com/max/2000/1*K3dFDGqCBL3kKmpSaMs71g.png)
+![](../img/Cronos Writeup/1_K3dFDGqCBL3kKmpSaMs71g.png)
 
 Since we can run arbitrary commands using this tool, let’s get it to send a reverse shell back to our attack box.
 
@@ -196,7 +188,7 @@ Go to pentestmonkey [Reverse Shell Cheat Sheet](http://pentestmonkey.net/cheat-s
 
 Highlight the entire string and click on CTRL+U to URL encode it.
 
-![](https://cdn-images-1.medium.com/max/2000/1*4kzlbFV-7uYIf1JzpmDEsA.png)
+![](../img/Cronos Writeup/1_4kzlbFV-7uYIf1JzpmDEsA.png)
 
 Set up a listener on the attack machine.
 
@@ -206,7 +198,7 @@ Execute the request. It doesn’t send a reverse shell back. Check if bash is in
 
     which bash
 
-![](https://cdn-images-1.medium.com/max/2000/1*5ljbBdyQo5QOKxfjBdFdnA.png)
+![](../img/Cronos Writeup/1_5ljbBdyQo5QOKxfjBdFdnA.png)
 
 It is so I’m not sure why this didn’t work. Let’s try python.
 
@@ -214,11 +206,11 @@ It is so I’m not sure why this didn’t work. Let’s try python.
 
 Again, don’t forget to URL encode it.
 
-![](https://cdn-images-1.medium.com/max/2000/1*a_2rl6isI-8XzSMcf9fyFw.png)
+![](../img/Cronos Writeup/1_a_2rl6isI-8XzSMcf9fyFw.png)
 
 We get back a low privileged shell!
 
-![](https://cdn-images-1.medium.com/max/2000/1*HlbmfN58w08F8xgCSTlpsw.png)
+![](../img/Cronos Writeup/1_HlbmfN58w08F8xgCSTlpsw.png)
 
 Let’s upgrade it to a better shell.
 
@@ -232,7 +224,7 @@ Once that is done, run the command “fg” to bring netcat back to the foregrou
 
 Grab the user flag.
 
-![](https://cdn-images-1.medium.com/max/2000/1*OprXSZljihjVu0LhZ_w28g.png)
+![](../img/Cronos Writeup/1_OprXSZljihjVu0LhZ_w28g.png)
 
 We need to escalate privileges.
 
@@ -259,15 +251,15 @@ Run the script.
 
 Considering the name of the box, I’m going to focus on Crontab.
 
-![](https://cdn-images-1.medium.com/max/2000/1*uEslRn_pcSHggI4NNStLag.png)
+![](../img/Cronos Writeup/1_uEslRn_pcSHggI4NNStLag.png)
 
 If you’re not familiar with the crontab format, here’s a quick explanation taken from this [page](https://tigr.net/3203/2014/09/13/getting-wordpress-cron-work-in-multisite-environment/).
 
-![](https://cdn-images-1.medium.com/max/2000/1*sLOOxtqyH97Denfq7bWBzA.png)
+![](../img/Cronos Writeup/1_sLOOxtqyH97Denfq7bWBzA.png)
 
 We’re currently running as www-data and that user usually has full privileges on the content of the directory /var/www. Let’s confirm that.
 
-![](https://cdn-images-1.medium.com/max/2000/1*aDpYm00dnTE_VuqFN_b_jQ.png)
+![](../img/Cronos Writeup/1_aDpYm00dnTE_VuqFN_b_jQ.png)
 
 If you’re not familiar with unix permissions, here’s a great explanation.
 
@@ -285,15 +277,15 @@ Set up a listener to receive the reverse shell.
 
 Wait for a minute for the scheduled cron job to run and we are root!
 
-![](https://cdn-images-1.medium.com/max/2000/1*oZPZnrLRAw1SgqtH6yMAMw.png)
+![](../img/Cronos Writeup/1_oZPZnrLRAw1SgqtH6yMAMw.png)
 
 Grab the root flag.
 
-![](https://cdn-images-1.medium.com/max/2000/1*hccgj5JudO8UViGO51QXdQ.png)
+![](../img/Cronos Writeup/1_hccgj5JudO8UViGO51QXdQ.png)
 
 To escalate privileges in another way, transfer the linux exploit suggester script and run it on the target machine to see if your machine is vulnerable to any privilege escalation exploits.
 
-![](https://cdn-images-1.medium.com/max/2000/1*aIVtIF74KtaTwtK4jYN62Q.png)
+![](../img/Cronos Writeup/1_aIVtIF74KtaTwtK4jYN62Q.png)
 
 I wasn’t able to successfully exploit Dirty COW on this machine but that doesn’t mean it’s not vulnerable. It could be vulnerable to a different variant of the exploit that I tested.
 
@@ -317,4 +309,4 @@ To escalate to root privileges, we needed to exploit either of the following vul
 
 10 machines down, 31 more to go!
 
-![](https://cdn-images-1.medium.com/max/2000/1*sjmB28wlgpxY6hYnvxpRYg.png)
+![](../img/Cronos Writeup/1_sjmB28wlgpxY6hYnvxpRYg.png)
