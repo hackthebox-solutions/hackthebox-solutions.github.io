@@ -1,0 +1,897 @@
+<!-- Fix MathJax rendering on iOS Safari due to rendering long numbers as phone numbers. -->
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+	
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="A compilation of writeups for the website- [**https://www.hackthebox.eu/](https://www.hackthebox.eu/**).">
+      
+      
+        <link rel="canonical" href="http://hackthebox-solutions.github.io/Retired/Curling Writeup/">
+      
+      
+        <meta name="author" content="Rushi Chaudhari">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+    
+	<meta name="format-detection" content="telephone=no">
+
+    
+      
+        <title>13. Curling Writeup.md - Hackthebox Solutions</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../css/katex.css">
+    
+      <link rel="stylesheet" href="../../css/custom.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="http://hackthebox-solutions.github.io" title="Hackthebox Solutions" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Hackthebox Solutions
+            </span>
+            <span class="md-header-nav__topic">
+              
+                13. Curling Writeup.md
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    hackthebox-solutions.github.io
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="http://hackthebox-solutions.github.io" title="Hackthebox Solutions" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Hackthebox Solutions
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    hackthebox-solutions.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Preface" class="md-nav__link">
+      Preface
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      I Retired
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        I Retired
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Access Writeup/" title="1. Access Writeup.md" class="md-nav__link">
+      1. Access Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Jerry Writeup/" title="2. Jerry Writeup.md" class="md-nav__link">
+      2. Jerry Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Blue Writeup wo Metasploit/" title="3. Blue Writeup w/o Metasploit.md" class="md-nav__link">
+      3. Blue Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Blocky Writeup/" title="4. Blocky Writeup.md" class="md-nav__link">
+      4. Blocky Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Calamity Writeup/" title="5. Calamity Writeup.md" class="md-nav__link">
+      5. Calamity Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Devoops Writeup/" title="6. Devoops Writeup.md" class="md-nav__link">
+      6. Devoops Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Apocalyst Writeup/" title="7. Apocalyst Writeup.md" class="md-nav__link">
+      7. Apocalyst Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Poison Writeup wo Metasploit/" title="8. Poison Writeup w/o Metasploit.md" class="md-nav__link">
+      8. Poison Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Postman Writeup/" title="9. Postman Writeup.md" class="md-nav__link">
+      9. Postman Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Beep Writeup/" title="10. Beep Writeup.md" class="md-nav__link">
+      10. Beep Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Help Writeup/" title="11. Help Writeup.md" class="md-nav__link">
+      11. Help Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Mirai Writeup/" title="12. Mirai Writeup.md" class="md-nav__link">
+      12. Mirai Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+    <a href="./" title="13. Curling Writeup.md" class="md-nav__link md-nav__link--active">
+      13. Curling Writeup.md
+    </a>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Nibbles Writeup wo Metasploit/" title="14. Nibbles Writeup w/o Metasploit.md" class="md-nav__link">
+      14. Nibbles Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Valentine Writeup wo Metasploit/" title="15. Valentine Writeup w/o Metasploit.md" class="md-nav__link">
+      15. Valentine Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Popcorn Writeups/" title="16. Popcorn Writeups.md" class="md-nav__link">
+      16. Popcorn Writeups.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Cronos Writeup/" title="17. Cronos Writeup.md" class="md-nav__link">
+      17. Cronos Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Legacy Writeup/" title="18. Legacy Writeup.md" class="md-nav__link">
+      18. Legacy Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Openadmin Writeup/" title="19. Openadmin Writeup.md" class="md-nav__link">
+      19. Openadmin Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Bank Writeup/" title="20. Bank Writeup.md" class="md-nav__link">
+      20. Bank Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Shocker Writeup wo Metasploit/" title="21. Shocker Writeup w/o Metasploit.md" class="md-nav__link">
+      21. Shocker Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Luke Writeup/" title="22. Luke Writeup.md" class="md-nav__link">
+      22. Luke Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Arctic Writeup wo Metasploit/" title="23. Arctic Writeup w/o Metasploit.md" class="md-nav__link">
+      23. Arctic Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Granny Writeup/" title="24. Granny Writeup.md" class="md-nav__link">
+      24. Granny Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Netmon Writeup/" title="25. Netmon Writeup.md" class="md-nav__link">
+      25. Netmon Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Sense Writeup wo Metasploit/" title="26. Sense Writeup w/o Metasploit.md" class="md-nav__link">
+      26. Sense Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Sunday Writeup wo Metasploit/" title="27. Sunday Writeup w/o Metasploit.md" class="md-nav__link">
+      27. Sunday Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Solidstate Writeup wo Metasploit/" title="28. Solidstate Writeup w/o Metasploit.md" class="md-nav__link">
+      28. Solidstate Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Celestial Writeup/" title="29. Celestial Writeup.md" class="md-nav__link">
+      29. Celestial Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tenten Writeup/" title="30. Tenten Writeup.md" class="md-nav__link">
+      30. Tenten Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Optimum Writeup/" title="31. Optimum Writeup.md" class="md-nav__link">
+      31. Optimum Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Haircut Writeup/" title="32. Haircut Writeup.md" class="md-nav__link">
+      32. Haircut Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Irked Writeup/" title="33. Irked Writeup.md" class="md-nav__link">
+      33. Irked Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Chatterbox Writeup wo Metasploit/" title="34. Chatterbox Writeup w/o Metasploit.md" class="md-nav__link">
+      34. Chatterbox Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Bashed Writeup/" title="35. Bashed Writeup.md" class="md-nav__link">
+      35. Bashed Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Lame Writeup/" title="36. Lame Writeup.md" class="md-nav__link">
+      36. Lame Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Grandpa Writeup/" title="37. Grandpa Writeup.md" class="md-nav__link">
+      37. Grandpa Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Swagshop Writeup/" title="38. Swagshop Writeup.md" class="md-nav__link">
+      38. Swagshop Writeup.md
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/edit/master/docs/Retired/Curling Writeup.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>13. Curling Writeup.md</h1>
+                
+                <p><img alt="" src="../../img/Curling Writeup/1_dHDYHCK0RrYK1laKN-a8xw.png" /></p>
+<p>Curling name is probably given by the creator because the way it uses the curl to make a GET request on local files.Curling is a blog site using Joomla, a free open source content management system (CMS). The box is pretty fun and easy doesn’t require lot of enumeration and it isn’t too CTF like. We begin with</p>
+<p><em>nmap -sC -sV 10.10.10.150</em></p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos=" 1 "></span>Nmap scan report for 10.10.10.150
+<span class="lineno" data-linenos=" 2 "></span>Host is up (0.20s latency).
+<span class="lineno" data-linenos=" 3 "></span>Not shown: 998 closed ports
+<span class="lineno" data-linenos=" 4 "></span>PORT   STATE SERVICE VERSION
+<span class="lineno" data-linenos=" 5 "></span>22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4 (Ubuntu Linux; protocol 2.0)
+<span class="lineno" data-linenos=" 6 "></span>| ssh-hostkey:
+<span class="lineno" data-linenos=" 7 "></span>|   2048 8a:d1:69:b4:90:20:3e:a7:b6:54:01:eb:68:30:3a:ca (RSA)
+<span class="lineno" data-linenos=" 8 "></span>|   256 9f:0b:c2:b2:0b:ad:8f:a1:4e:0b:f6:33:79:ef:fb:43 (ECDSA)
+<span class="lineno" data-linenos=" 9 "></span>|_  256 c1:2a:35:44:30:0c:5b:56:6a:3f:a5:cc:64:66:d9:a9 (ED25519)
+<span class="lineno" data-linenos="10 "></span>80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+<span class="lineno" data-linenos="11 "></span>|_http-generator: Joomla! - Open Source Content Management
+<span class="lineno" data-linenos="12 "></span>|_http-server-header: Apache/2.4.29 (Ubuntu)
+<span class="lineno" data-linenos="13 "></span>|_http-title: Home
+<span class="lineno" data-linenos="14 "></span>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</pre></div>
+
+<p>Port 80 is open viewing the site in the browser takes us to the Curling website. There are 3 blog posts and a login form. Since we don’t have any credentials till now we can try some general username password combinations, which don’t work to keep our self away from hitting a dead end we enumerate directories.</p>
+<p>The web-page looks likes this and we can see one interesting thing under the first post of curling in 2018! blog post. We have what seems to be a username at the end of the post ==&gt; <strong>FLORIS</strong></p>
+<p><img alt="" src="../../img/Curling Writeup/1_Kt3-yoaemJ19csAj5r500A.png" /></p>
+<p>From our results from enumerating directories we see that there is /administrator page.</p>
+<p>Before going to that page we see the source page of 10.10.10.150 for good measure and in hope of find something.</p>
+<p>And Alas!!! we have a secret at the end of the page .</p>
+<p><img alt="" src="../../img/Curling Writeup/1_PyAtJxDJxaQwYmk3Eon8qg.png" /></p>
+<p>Going to 10.10.10.150/secret.txt we have what appears to be a base64 encoded string decoding it gives <strong>Curling2018!. </strong>Now we have a pair of credentials which we can try on the /administrator page.</p>
+<p>Using Floris as username and Curling2018! as password we are successfully brought to the admin control panel.</p>
+<p>There are lot of things to try to get our code executed and get a shell many of the ways lead to a rabbit hole. The first thing I tried is going to /media and tried to upload a png with php code in it by renaming it to something.php.png in Burpsuite, this gave an error “<em>You have tried to upload file(s) that are not safe</em>” you can check this method in Ippsec’s Popcorn <a href="https://www.youtube.com/watch?v=NMGsnPSm8iw"><strong>video</strong></a>. The next thing I tried was under Install Extensions, where I installed a Simple file upload extension which i found from this [**site,]**(https://extensions.joomla.org/extension/simple-file-upload/) and tried uploading a php script after changing all the rules to let me upload a php script but again a dead end some internal Joomla function was preventing any type of php script upload.</p>
+<p>Then after a bit of googling and research i found templates can be written in php and can be executed. So under Template/styles I made beez3 default and in template section I found all the php scripts the site used and they were editable!!!!</p>
+<p>I grabbed php-reverse-shell script from <a href="https://github.com/pentestmonkey/php-reverse-shell"><strong>git-hub</strong></a>. Pasted it in index.php changed the ip parameter put in my ip and in my terminal I listened on port 1234. I saved the php file.</p>
+<p><img alt="" src="../../img/Curling Writeup/1_1yvRw8_hb_lprGX9qr4ymg.png" /></p>
+<p>I executed the script by going to <a href="http://10.10.10.150/index.php">http://10.10.10.150/index.php</a> and boom instantly I had a shell at my terminal through netcat this was still a basic reverse shell.</p>
+<p><img alt="" src="../../img/Curling Writeup/1_pv1rzXhhG7boWw82UaAWaw.png" /></p>
+<p>Since this was not a full fledged shell and I was still www-data I couldn’t read user.txt but in /home/floris I found 1 directory admin-area and 2 files named password_backup and user.txt running cat on these files gave me this</p>
+<p><img alt="" src="../../img/Curling Writeup/1_wBs6ipOaJF_17h8KQ9XWNw.png" /></p>
+<p>I copied the hex dump to my machine and the initial bytes looked similar they were bzip2 compressed. So i thought this must be a simple decompressing challenge to attain the password. I did repeated decompressing on this file like this: (for more <a href="https://www.akashtrehan.com/writeups/OverTheWire/Bandit/level12/">click</a>)</p>
+<p><img alt="" src="../../img/Curling Writeup/1_Wp6eU6Ctg1msx91z3Xd1qQ.png" /></p>
+<p>So finally we have the password.txt which gives us the password <strong>5d&lt;wdCbdZu)|hChXll </strong>using floris as username and this as the password we can successfully ssh into the machine, and can get the user flag.</p>
+<p><img alt="" src="../../img/Curling Writeup/1_Il8daHbtdQPlLW4xLxiF9A.png" /></p>
+<p>Now onto root, We have admin-area directory in /home/floris this admin-area contains 2 files input and report the file contents are:</p>
+<p><img alt="" src="../../img/Curling Writeup/1_P8ij1HuuSLpH0G8QqVOM9w.png" /></p>
+<p>This seems like input is some input to some process and report is executing and displaying the outcome of this some process. To know this process properly, in the input url I put my ip and a port and listened on that port using netcat.</p>
+<p><img alt="" src="../../img/Curling Writeup/1_zaCDQkOG5B1TmbN045wkpA.png" /></p>
+<p>In my terminal I could see user-Agent as <strong>curl/7.58.0</strong> so curl was doing this GET request. I saw that curl was running with floris privileges(ps -elf| grep curl), and after reading the curl man page and a bit of googling I concluded that curl can GET local files also.I tried this on my machine as a local user in root group with a command like this</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>curl file:///etc/shadow
+</pre></div>
+
+<p>And I could successfully get the result even by running curl as not root.So after my little experiment I edited the input file as <strong><em>url=”file:///root/root.txt” </em></strong>and when I saw the contents of the report file I was staring at the root flag. ROOTED!!!!</p>
+<p><img alt="ROOT flag" src="../../img/Curling Writeup/1_vLUj7l5YW4aoaZq0aqToeA.png" /></p>
+<p>If you had found a way to get a root shell directly without input or report file please do share with me in the comments below. I know I could have replaced url as ”file:///etc/shadow” and grabbed the root password. </p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../Mirai Writeup/" title="12. Mirai Writeup.md" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                12. Mirai Writeup.md
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../Nibbles Writeup wo Metasploit/" title="14. Nibbles Writeup w/o Metasploit.md" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                14. Nibbles Writeup w/o Metasploit.md
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Built by <a href="http://github.com/rushic24">Rushi</a> &copy; 2020
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/rushic24" class="md-footer-social__link fa fa-"></a>
+    
+      <a href="https://www.linkedin.com/in/rushichaudhari" class="md-footer-social__link fa fa-"></a>
+    
+      <a href="" class="md-footer-social__link fa fa-"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1105 @@
+<!-- Fix MathJax rendering on iOS Safari due to rendering long numbers as phone numbers. -->
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+	
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="A compilation of writeups for the website- [**https://www.hackthebox.eu/](https://www.hackthebox.eu/**).">
+      
+      
+        <link rel="canonical" href="http://hackthebox-solutions.github.io/Retired/Luke Writeup/">
+      
+      
+        <meta name="author" content="Rushi Chaudhari">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+    
+	<meta name="format-detection" content="telephone=no">
+
+    
+      
+        <title>22. Luke Writeup.md - Hackthebox Solutions</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../css/katex.css">
+    
+      <link rel="stylesheet" href="../../css/custom.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#about-the-box" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="http://hackthebox-solutions.github.io" title="Hackthebox Solutions" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Hackthebox Solutions
+            </span>
+            <span class="md-header-nav__topic">
+              
+                22. Luke Writeup.md
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    hackthebox-solutions.github.io
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="http://hackthebox-solutions.github.io" title="Hackthebox Solutions" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Hackthebox Solutions
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    hackthebox-solutions.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Preface" class="md-nav__link">
+      Preface
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      I Retired
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        I Retired
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Access Writeup/" title="1. Access Writeup.md" class="md-nav__link">
+      1. Access Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Jerry Writeup/" title="2. Jerry Writeup.md" class="md-nav__link">
+      2. Jerry Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Blue Writeup wo Metasploit/" title="3. Blue Writeup w/o Metasploit.md" class="md-nav__link">
+      3. Blue Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Blocky Writeup/" title="4. Blocky Writeup.md" class="md-nav__link">
+      4. Blocky Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Calamity Writeup/" title="5. Calamity Writeup.md" class="md-nav__link">
+      5. Calamity Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Devoops Writeup/" title="6. Devoops Writeup.md" class="md-nav__link">
+      6. Devoops Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Apocalyst Writeup/" title="7. Apocalyst Writeup.md" class="md-nav__link">
+      7. Apocalyst Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Poison Writeup wo Metasploit/" title="8. Poison Writeup w/o Metasploit.md" class="md-nav__link">
+      8. Poison Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Postman Writeup/" title="9. Postman Writeup.md" class="md-nav__link">
+      9. Postman Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Beep Writeup/" title="10. Beep Writeup.md" class="md-nav__link">
+      10. Beep Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Help Writeup/" title="11. Help Writeup.md" class="md-nav__link">
+      11. Help Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Mirai Writeup/" title="12. Mirai Writeup.md" class="md-nav__link">
+      12. Mirai Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Curling Writeup/" title="13. Curling Writeup.md" class="md-nav__link">
+      13. Curling Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Nibbles Writeup wo Metasploit/" title="14. Nibbles Writeup w/o Metasploit.md" class="md-nav__link">
+      14. Nibbles Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Valentine Writeup wo Metasploit/" title="15. Valentine Writeup w/o Metasploit.md" class="md-nav__link">
+      15. Valentine Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Popcorn Writeups/" title="16. Popcorn Writeups.md" class="md-nav__link">
+      16. Popcorn Writeups.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Cronos Writeup/" title="17. Cronos Writeup.md" class="md-nav__link">
+      17. Cronos Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Legacy Writeup/" title="18. Legacy Writeup.md" class="md-nav__link">
+      18. Legacy Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Openadmin Writeup/" title="19. Openadmin Writeup.md" class="md-nav__link">
+      19. Openadmin Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Bank Writeup/" title="20. Bank Writeup.md" class="md-nav__link">
+      20. Bank Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Shocker Writeup wo Metasploit/" title="21. Shocker Writeup w/o Metasploit.md" class="md-nav__link">
+      21. Shocker Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="22. Luke Writeup.md" class="md-nav__link md-nav__link--active">
+      22. Luke Writeup.md
+    </a>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Arctic Writeup wo Metasploit/" title="23. Arctic Writeup w/o Metasploit.md" class="md-nav__link">
+      23. Arctic Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Granny Writeup/" title="24. Granny Writeup.md" class="md-nav__link">
+      24. Granny Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Netmon Writeup/" title="25. Netmon Writeup.md" class="md-nav__link">
+      25. Netmon Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Sense Writeup wo Metasploit/" title="26. Sense Writeup w/o Metasploit.md" class="md-nav__link">
+      26. Sense Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Sunday Writeup wo Metasploit/" title="27. Sunday Writeup w/o Metasploit.md" class="md-nav__link">
+      27. Sunday Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Solidstate Writeup wo Metasploit/" title="28. Solidstate Writeup w/o Metasploit.md" class="md-nav__link">
+      28. Solidstate Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Celestial Writeup/" title="29. Celestial Writeup.md" class="md-nav__link">
+      29. Celestial Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tenten Writeup/" title="30. Tenten Writeup.md" class="md-nav__link">
+      30. Tenten Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Optimum Writeup/" title="31. Optimum Writeup.md" class="md-nav__link">
+      31. Optimum Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Haircut Writeup/" title="32. Haircut Writeup.md" class="md-nav__link">
+      32. Haircut Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Irked Writeup/" title="33. Irked Writeup.md" class="md-nav__link">
+      33. Irked Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Chatterbox Writeup wo Metasploit/" title="34. Chatterbox Writeup w/o Metasploit.md" class="md-nav__link">
+      34. Chatterbox Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Bashed Writeup/" title="35. Bashed Writeup.md" class="md-nav__link">
+      35. Bashed Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Lame Writeup/" title="36. Lame Writeup.md" class="md-nav__link">
+      36. Lame Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Grandpa Writeup/" title="37. Grandpa Writeup.md" class="md-nav__link">
+      37. Grandpa Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Swagshop Writeup/" title="38. Swagshop Writeup.md" class="md-nav__link">
+      38. Swagshop Writeup.md
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/edit/master/docs/Retired/Luke Writeup.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <p>This is a write-up on how i solved Luke from HacktheBox.</p>
+<p><a href="http://hackthebox.eu">Hack the Box</a> is an online platform where you practice your penetration testing skills.</p>
+<p>As always, I try to explain how I understood the concepts here from the machine because I want to really understand how things work. So please, if I misunderstood a concept, please let me know.</p>
+<p><img alt="https://www.hackthebox.eu/home/machines/profile/190" src="https://cdn-images-1.medium.com/max/1046/1*AOpCOxKurkzoWUfhErdxnw.png" /></p>
+<h1 id="about-the-box">About the box</h1>
+<p>Luke is rated medium difficulty, and it’s OS is FreeBSD. I think it’s passable as an easy box as it’s fairly short and simple. When I solved this, I forgot that this was a medium difficulty box, but realized that it will be quite difficult if you don’t enumerate properly. Also, for me, the box’s required approach is new compared to the active machines at the time this was released but as all HTB machines, there is something to learn from here.</p>
+<h1 id="tldr">#TLDR</h1>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>**Initial foothold:** Through enumeration, found details for credentials to authenticate to get a JWT.
+<span class="lineno" data-linenos="2 "></span>**Root:** Using the generated JWT to list more credentials from port 3000 and accessing Ajenti Server Admin Panel, reading root.txt and user.txt
+</pre></div>
+
+<h1 id="initial-foothold">#Initial Foothold</h1>
+<p>As usual, I run an nmap scan, saving it to my Nnmap directory:</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>nmap -sV -sC -oA nmap/initial 10.10.10.137
+</pre></div>
+
+<p>The output is:</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos=" 1 "></span>Nmap scan report for 10.10.10.137
+<span class="lineno" data-linenos=" 2 "></span>Host is up (0.27s latency).
+<span class="lineno" data-linenos=" 3 "></span>Not shown: 991 closed ports
+<span class="lineno" data-linenos=" 4 "></span>PORT      STATE    SERVICE   VERSION
+<span class="lineno" data-linenos=" 5 "></span>21/tcp    open     ftp       vsftpd 3.0.3+ (ext.1)
+<span class="lineno" data-linenos=" 6 "></span>| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+<span class="lineno" data-linenos=" 7 "></span>|_drwxr-xr-x    2 0        0             512 Apr 14 12:35 webapp
+<span class="lineno" data-linenos=" 8 "></span>| ftp-syst:
+<span class="lineno" data-linenos=" 9 "></span>|   STAT:
+<span class="lineno" data-linenos="10 "></span>| FTP server status:
+<span class="lineno" data-linenos="11 "></span>|      Connected to 10.10.13.22
+<span class="lineno" data-linenos="12 "></span>|      Logged in as ftp
+<span class="lineno" data-linenos="13 "></span>|      TYPE: ASCII
+<span class="lineno" data-linenos="14 "></span>|      No session upload bandwidth limit
+<span class="lineno" data-linenos="15 "></span>|      No session download bandwidth limit
+<span class="lineno" data-linenos="16 "></span>|      Session timeout in seconds is 300
+<span class="lineno" data-linenos="17 "></span>|      Control connection is plain text
+<span class="lineno" data-linenos="18 "></span>|      Data connections will be plain text
+<span class="lineno" data-linenos="19 "></span>|      At session startup, client count was 3
+<span class="lineno" data-linenos="20 "></span>|      vsFTPd 3.0.3+ (ext.1) - secure, fast, stable
+<span class="lineno" data-linenos="21 "></span>|_End of status
+<span class="lineno" data-linenos="22 "></span>22/tcp    open     ssh?
+<span class="lineno" data-linenos="23 "></span>80/tcp    open     http      Apache httpd 2.4.38 ((FreeBSD) PHP/7.3.3)
+<span class="lineno" data-linenos="24 "></span>| http-methods:
+<span class="lineno" data-linenos="25 "></span>|_  Potentially risky methods: TRACE
+<span class="lineno" data-linenos="26 "></span>|_http-server-header: Apache/2.4.38 (FreeBSD) PHP/7.3.3
+<span class="lineno" data-linenos="27 "></span>|_http-title: Luke
+<span class="lineno" data-linenos="28 "></span>1310/tcp  filtered husky
+<span class="lineno" data-linenos="29 "></span>3000/tcp  open     http      Node.js Express framework
+<span class="lineno" data-linenos="30 "></span>|_http-title: Site doesn&#39;t have a title (application/json; charset=utf-8).
+<span class="lineno" data-linenos="31 "></span>3003/tcp  filtered cgms
+<span class="lineno" data-linenos="32 "></span>8000/tcp  open     http      Ajenti http control panel
+<span class="lineno" data-linenos="33 "></span>|_http-title: Ajenti
+<span class="lineno" data-linenos="34 "></span>19315/tcp filtered keyshadow
+<span class="lineno" data-linenos="35 "></span>45100/tcp filtered unknown
+</pre></div>
+
+<p>Open services are FTP, SSH(?), http, Node.js and Ajenti. I first check FTP.</p>
+<h4 id="ftp">FTP</h4>
+<p><img alt="" src="../../img/Luke Writeup/1_jeclibCcaLPyWThVTDef7g.png" /></p>
+<p>I found a file called for_Chihiro.txt. I download it and read its contents:</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>Dear Chihiro !!
+<span class="lineno" data-linenos="2 "></span>
+<span class="lineno" data-linenos="3 "></span>As you told me that you wanted to learn Web Development and Frontend, I can give you a little push by showing the sources of
+<span class="lineno" data-linenos="4 "></span>the actual website I&#39;ve created .
+<span class="lineno" data-linenos="5 "></span>Normally you should know where to look but hurry up because I will delete them soon because of our security policies !
+<span class="lineno" data-linenos="6 "></span>
+<span class="lineno" data-linenos="7 "></span>Derry
+</pre></div>
+
+<p>It seems it’s a note from Derry to Chihiro, implying that he/she can access the sources of the website, but the access will be deleted soon. I check HTTP next.</p>
+<h4 id="http">HTTP</h4>
+<p><img alt="" src="../../img/Luke Writeup/1_t1OFPKvvdNRoJgOTYa2LBA.png" /></p>
+<p>The landing page gives us a website template. After playing with it, I found nothing interesting in the website. Since there is no sign or warning not to brute force, I ran dirsearch.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>dirsearch.py -u [http://10.10.10.137](http://10.10.10.137) -e php
+</pre></div>
+
+<p><img alt="" src="../../img/Luke Writeup/1_MKGh7Klpn1xlYCy1EC3-5w.png" /></p>
+<p>Dirsearch is a python tool that brute forces directories and files in a website. You can find it here, since if I remember correctly, it is not preinstalled in Kali.</p>
+<p><a href="https://github.com/maurosoria/dirsearch">https://github.com/maurosoria/dirsearch</a></p>
+<p>Checking the paths found:</p>
+<h4 id="configphp">config.php</h4>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>$dbHost = &#39;localhost&#39;; $dbUsername = &#39;root&#39;; $dbPassword = &#39;Zk6heYCyv6ZE9Xcg&#39;; $db = &quot;login&quot;; $conn = new mysqli($dbHost, $dbUsername, $dbPassword,$db) or die(&quot;Connect failed: %s\n&quot;. $conn -&gt; error);
+</pre></div>
+
+<p>It seems it’s made to look like an error which was probably intended. It gives us info of possible db credentials.</p>
+<h4 id="loginphp">/login.php</h4>
+<p>This gives us a login page.</p>
+<p><img alt="" src="../../img/Luke Writeup/1_oN2T34eHWaE1OGEtv2grJA.png" /></p>
+<p>Trying the credentials from config.php:</p>
+<p><img alt="" src="../../img/Luke Writeup/1_ljPUfdhje2EvbWFDKAa_1A.png" /></p>
+<h4 id="management">/management</h4>
+<p>There seems to be a management page. The credentials from the config.php doesn’t work on this also.</p>
+<p><img alt="" src="../../img/Luke Writeup/1_phsuitnOSAW_KFA2BDzoEQ.png" /></p>
+<h4 id="port-8000ajenti">Port 8000(Ajenti)</h4>
+<p>The last open service is Ajenti. The credentials doesn’t work on this also.</p>
+<p><img alt="" src="../../img/Luke Writeup/1_VZLFFVkx2KhsnJqepZh6VQ.png" /></p>
+<h4 id="port-3000nodejs">Port 3000(Node.js)</h4>
+<p>Visiting port 3000, I find this:</p>
+<p><img alt="" src="../../img/Luke Writeup/1_Sk0BIGG0tx-YB0FdcQTOVQ.png" /></p>
+<p>It seems that it requires of us an Auth token. I remember that when I first solved this box, it took me time to understand how to interact with Node.js. I run dirsearch.py on port 3000 to enumerate further.</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>dirsearch.py -u [http://10.10.10.137:3000](http://10.10.10.137:3000) -e json
+</pre></div>
+
+<p><img alt="" src="../../img/Luke Writeup/1_nlAEILY96YSkXvwxESm5dg.png" /></p>
+<p>I find /users/admin path. It is important to note that the credentials from config.php has a username of root, and not admin. Since it requires us JWT to authenticate, I then searched on how to do it.</p>
+<h4 id="authenticating">Authenticating</h4>
+<p>For us to access the json data, we first need to authenticate by getting a valid JWT(json web tokens). You can learn more about how it works here: <a href="https://jwt.io/">https://jwt.io/</a>. We can use cURL to get a valid JWT from our data using the syntax below(many ways to do this afaik). I use -s to not show the progress bar, -X request method, and -H for headers, and — data for the payload:</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>curl -s -X POST -H &#39;Accept: application/json&#39; -H &#39;Content-Type: application/json&#39; --data &#39;{&quot;username&quot;:&quot;root&quot;,&quot;password&quot;:&quot;Zk6heYCyv6ZE9Xcg&quot;}&#39; [http://10.10.10.137:3000/login](http://10.10.10.137:3000/login)
+<span class="lineno" data-linenos="2 "></span>
+<span class="lineno" data-linenos="3 "></span>Forbidden#
+</pre></div>
+
+<p>I get a “Forbidden” as the response. It seems that the credentials are not valid or we don’t have privilege to access this. After thinking some time and looking at what I have, I remember that there is a /users/admin path. Deducting that an admin user is valid, I tried changing root to admin:</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>curl -s -X POST -H &#39;Accept: application/json&#39; -H &#39;Content-Type: application/json&#39; --data &#39;{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;Zk6heYCyv6ZE9Xcg&quot;}&#39; [http://10.10.10.137:3000/login](http://10.10.10.137:3000/login)
+<span class="lineno" data-linenos="2 "></span>
+<span class="lineno" data-linenos="3 "></span>
+<span class="lineno" data-linenos="4 "></span>{&quot;success&quot;:true,&quot;message&quot;:&quot;Authentication successful!&quot;,&quot;token&quot;:&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNTY4NDUxMzEwLCJleHAiOjE1Njg1Mzc3MTB9.sP-q66lsXIsSs8jhYhvM6giOVvwABmmEJYoYl054gbc&quot;}
+</pre></div>
+
+<p>I then get a “success:true”. So the valid credentials are <strong>admin:Zk6heYCyv6ZE9Xcg.</strong></p>
+<h4 id="using-jq">Using jq</h4>
+<p>I then used a tool called jq. It is a tool to make json outputs much more “viewable” and “manageable”. Read more about how you can use it here:</p>
+<blockquote>
+<p><a href="https://0xdf.gitlab.io/2018/12/19/jq.html"><strong>You Need To Know jq</strong></a></p>
+<p><small>jq is such a nifty tool that not nealry enough people know about. If you're working with json data, even just small bits here and there, it's worth knowing the basics to make some simple data manipulations possible. And if you want to become a full on jq wizard, all the better.</small></p>
+</blockquote>
+<p>Using jq, the output will look like this:</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>curl -s -X POST -H &#39;Accept: application/json&#39; -H &#39;Content-Type: application/json&#39; --data &#39;{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;Zk6heYCyv6ZE9Xcg&quot;}&#39; [http://10.10.10.137:3000/login](http://10.10.10.137:3000/login) | jq
+<span class="lineno" data-linenos="2 "></span>
+<span class="lineno" data-linenos="3 "></span>
+<span class="lineno" data-linenos="4 "></span>{
+<span class="lineno" data-linenos="5 "></span>  &quot;success&quot;: true,
+<span class="lineno" data-linenos="6 "></span>  &quot;message&quot;: &quot;Authentication successful!&quot;,
+<span class="lineno" data-linenos="7 "></span>  &quot;token&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNTY4NDUxNDkwLCJleHAiOjE1Njg1Mzc4OTB9.pTGePScCFa4gFXNj9Gjfc9RqZfLwMBKtGY_HyfuULa0&quot;
+<span class="lineno" data-linenos="8 "></span>}
+</pre></div>
+
+<p>Filtering the value “token”:</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>curl -s -X POST -H &#39;Accept: application/json&#39; -H &#39;Content-Type: application/json&#39; --data &#39;{&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;Zk6heYCyv6ZE9Xcg&quot;}&#39; [http://10.10.10.137:3000/login](http://10.10.10.137:3000/login) | jq &#39;.token&#39;
+<span class="lineno" data-linenos="2 "></span>
+<span class="lineno" data-linenos="3 "></span>
+<span class="lineno" data-linenos="4 "></span>&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNTY4NDUxNTQzLCJleHAiOjE1Njg1Mzc5NDN9.PQlVYZfOkIRGnBMnpb6jDeV5F9g86ttccgrApZoC_xQ&quot;
+</pre></div>
+
+<p>You can then create a bash script to simplify and store it in a variable, but it’s not that important in this case.</p>
+<p>Here’s how it looks from the terminal:</p>
+<p><img alt="" src="../../img/Luke Writeup/1_vT3NneU82gZoZgQ7vPCT6g.png" /></p>
+<p>JWT’s payload part can be decoded. You can learn more about how it is encoded and what are its parts(that’s your homework). Basically, it looks like this side by side(using jwt.io):</p>
+<p><img alt="" src="../../img/Luke Writeup/1_-3tqyy361-xz8QoRsfyrhw.png" /></p>
+<p>Now that we have a valid JWT, accessing the port 3000 gives us this response:</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>curl -s -H &quot;Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNTY4NDUxOTg3LCJleHAiOjE1Njg1MzgzODd9.qC0H5LCBtZQCbgadv5BlAy8_AojNnMs5wY2We6pJmBI&quot; [http://10.10.10.137:3000](http://10.10.10.137:3000) | jq
+<span class="lineno" data-linenos="2 "></span>
+<span class="lineno" data-linenos="3 "></span>{
+<span class="lineno" data-linenos="4 "></span>  &quot;message&quot;: &quot;Welcome admin ! &quot;
+<span class="lineno" data-linenos="5 "></span>}
+</pre></div>
+
+<p>A welcome banner as admin is presented.</p>
+<h4 id="enumerating-users">Enumerating users</h4>
+<p>Accessing 10.10.10.137:3000/users using the JWT gives us this output:</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos=" 1 "></span>[
+<span class="lineno" data-linenos=" 2 "></span>  {
+<span class="lineno" data-linenos=" 3 "></span>    &quot;ID&quot;: &quot;1&quot;,
+<span class="lineno" data-linenos=" 4 "></span>    &quot;name&quot;: &quot;Admin&quot;,
+<span class="lineno" data-linenos=" 5 "></span>    &quot;Role&quot;: &quot;Superuser&quot;
+<span class="lineno" data-linenos=" 6 "></span>  },
+<span class="lineno" data-linenos=" 7 "></span>  {
+<span class="lineno" data-linenos=" 8 "></span>    &quot;ID&quot;: &quot;2&quot;,
+<span class="lineno" data-linenos=" 9 "></span>    &quot;name&quot;: &quot;Derry&quot;,
+<span class="lineno" data-linenos="10 "></span>    &quot;Role&quot;: &quot;Web Admin&quot;
+<span class="lineno" data-linenos="11 "></span>  },
+<span class="lineno" data-linenos="12 "></span>  {
+<span class="lineno" data-linenos="13 "></span>    &quot;ID&quot;: &quot;3&quot;,
+<span class="lineno" data-linenos="14 "></span>    &quot;name&quot;: &quot;Yuri&quot;,
+<span class="lineno" data-linenos="15 "></span>    &quot;Role&quot;: &quot;Beta Tester&quot;
+<span class="lineno" data-linenos="16 "></span>  },
+<span class="lineno" data-linenos="17 "></span>  {
+<span class="lineno" data-linenos="18 "></span>    &quot;ID&quot;: &quot;4&quot;,
+<span class="lineno" data-linenos="19 "></span>    &quot;name&quot;: &quot;Dory&quot;,
+<span class="lineno" data-linenos="20 "></span>    &quot;Role&quot;: &quot;Supporter&quot;
+<span class="lineno" data-linenos="21 "></span>  }
+<span class="lineno" data-linenos="22 "></span>]
+</pre></div>
+
+<h4 id="usersadmin">/users/admin</h4>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>{
+<span class="lineno" data-linenos="2 "></span>  &quot;name&quot;: &quot;Admin&quot;,
+<span class="lineno" data-linenos="3 "></span>  &quot;password&quot;: &quot;WX5b7)&gt;/rp$U)FW&quot;
+<span class="lineno" data-linenos="4 "></span>}
+</pre></div>
+
+<p>Since from our previous enumeration, there exists a /users/admin, we can try /users/”name” from the json output.</p>
+<h4 id="usersderry">/users/derry</h4>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>{
+<span class="lineno" data-linenos="2 "></span>  &quot;name&quot;: &quot;Derry&quot;,
+<span class="lineno" data-linenos="3 "></span>  &quot;password&quot;: &quot;rZ86wwLvx7jUxtch&quot;
+<span class="lineno" data-linenos="4 "></span>}
+</pre></div>
+
+<h4 id="usersyuri">/users/yuri</h4>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>{
+<span class="lineno" data-linenos="2 "></span>  &quot;name&quot;: &quot;Yuri&quot;,
+<span class="lineno" data-linenos="3 "></span>  &quot;password&quot;: &quot;bet@tester87&quot;
+<span class="lineno" data-linenos="4 "></span>}
+</pre></div>
+
+<h4 id="usersdory">/users/dory</h4>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>{
+<span class="lineno" data-linenos="2 "></span>  &quot;name&quot;: &quot;Dory&quot;,
+<span class="lineno" data-linenos="3 "></span>  &quot;password&quot;: &quot;5y:!xa=ybfe)/QD&quot;
+<span class="lineno" data-linenos="4 "></span>}
+</pre></div>
+
+<p>I now have many credentials to try. After trying to them to the services and login pages, only one of them worked for me.</p>
+<h4 id="using-derry-creds">Using Derry creds:</h4>
+<p>I accessed /management, and reviewing our notes (for_Chihiro.txt):</p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>Dear Chihiro !!
+<span class="lineno" data-linenos="2 "></span>
+<span class="lineno" data-linenos="3 "></span>As you told me that you wanted to learn Web Development and Frontend, I can give you a little push by showing the sources of
+<span class="lineno" data-linenos="4 "></span>the actual website I&#39;ve created .
+<span class="lineno" data-linenos="5 "></span>Normally you should know where to look but hurry up because I will delete them soon because of our security policies !
+<span class="lineno" data-linenos="6 "></span>
+<span class="lineno" data-linenos="7 "></span>Derry
+</pre></div>
+
+<p>Derry is a web admin(also from the json output). Using it to access /management:</p>
+<p><img alt="" src="../../img/Luke Writeup/1_eIFo_lfg7drKm6d1fDtZxw.png" /></p>
+<p><img alt="" src="../../img/Luke Writeup/1_pE0LgQH29CepA3xsS5afGQ.png" /></p>
+<p>I get access to management. What’s new here is the config.json file.</p>
+<h1 id="getting-rootand-user">Getting Root(and User):</h1>
+<p>Checking the config.json, I see a password which seems looks like will work for the user root.</p>
+<p><img alt="" src="../../img/Luke Writeup/1_DKwT6ihQQVw4wi4Jj2x3bw.png" /></p>
+<div class="highlight"><pre><span></span><span class="lineno" data-linenos="1 "></span>**root:KpMasng6S5EtTy9Z**
+</pre></div>
+
+<p>Accessing 10.10.10.137:8000:</p>
+<p><img alt="" src="../../img/Luke Writeup/1_JWx0LccMJavEEu72SKKsFg.png" /></p>
+<p>Since Ajenti is a GUI for server management tasks, I can look into functions that I can leverage.</p>
+<p><img alt="" src="../../img/Luke Writeup/1_ylezFKBMWKrXieGJvxwLlw.png" /></p>
+<p>Under the tools section, Ajenti allows me to open a terminal. Since I verify if I have root access, I run id. I am running as root, and therefore can read root.txt and user.txt..</p>
+<p><img alt="" src="../../img/Luke Writeup/1_DDB94flmYG9cTPMvhq330g.png" /></p>
+<p>So that’s how I solved Luke from Hack the Box. After spending some time playing with what I can do from the shell, to find how I can SSH, I wasn’t able to. I also learned that the location of http is different(not on /var/www/html commonly on Linux), and account password hashes are stored on /etc/master.passwd rather than the usual /etc/shadow. I also tried cracking Derry’s password hash but wasn’t able to(just used rockyou.txt).</p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../Shocker Writeup wo Metasploit/" title="21. Shocker Writeup w/o Metasploit.md" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                21. Shocker Writeup w/o Metasploit.md
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../Arctic Writeup wo Metasploit/" title="23. Arctic Writeup w/o Metasploit.md" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                23. Arctic Writeup w/o Metasploit.md
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Built by <a href="http://github.com/rushic24">Rushi</a> &copy; 2020
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/rushic24" class="md-footer-social__link fa fa-"></a>
+    
+      <a href="https://www.linkedin.com/in/rushichaudhari" class="md-footer-social__link fa fa-"></a>
+    
+      <a href="" class="md-footer-social__link fa fa-"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

